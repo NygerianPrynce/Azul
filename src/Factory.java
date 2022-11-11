@@ -34,7 +34,7 @@ public class Factory {
                 }
                 else{
                     if(Gamestate.getBagTotal() == 0){
-                        refillBag();
+                        Gamestate.refillBag();
                     }
                 }
             }
@@ -55,9 +55,7 @@ public class Factory {
     }
     //adds the tiles in the factory to the discard pile in game state
     public void moveLeftOvers(){
-        for (int i = 0; i < factory.size(); i++){
-            Gamestate.addToLeftOverPile(factory.get(i));
-        }
+        Gamestate.addToLeftOverPile(getFactoryContents());
         factory.clear();
     }
     //clear factory
@@ -71,6 +69,10 @@ public class Factory {
             factoryString += factory.get(i) + " ";
         }
         return factoryString;
+    }
+    // returns the number of integers in the arraylist
+    public int getTileCount(){
+        return factory.size();
     }
 
 
