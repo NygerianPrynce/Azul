@@ -1,4 +1,11 @@
+
 import java.util.ArrayList;
+import java.util.TreeMap;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 
 public class Factory {
     ArrayList<Integer> factory;
@@ -65,7 +72,8 @@ public class Factory {
         }
         return factoryString;
     }
-    
+
 
     
 }
+
