@@ -1,9 +1,15 @@
-public class PlayerWall {
+public class PlayerWall{
     // wall is an array of 5 rows and 5 columns
     Integer[][] wall;
     Integer recentTile;
     public PlayerWall() {
         wall = new Integer[5][5];
+        wall[0][1] = 2;
+        wall[1][1] = 2;
+        wall[2][1] = 2;
+        wall[3][1] = 2;
+        wall[4][1] = 2;
+
     }
     // isRowAvailable checks if the row can take in the tile type in the specific row
     public boolean isRowAvailable(int row, int tileType){

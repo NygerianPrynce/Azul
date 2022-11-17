@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
-
+/* 
     public class Gamestate {
 
         private static ArrayList<Player> players; // List of players
@@ -119,3 +119,4 @@ import java.util.TreeMap;
     
     
 }
+*/
