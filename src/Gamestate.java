@@ -40,7 +40,7 @@ import java.util.TreeMap;
             }
             return total;
         }
-        // returns the total number of tiles in the dead pile
+        // returns athe total number of tiles in the dead pile
         public static int getDeadPileTotal(){
             int total = 0;
             for (int i = 0; i < deadPile.size(); i++){
@@ -104,6 +104,7 @@ import java.util.TreeMap;
                 leftOverPile.add(tiles.get(i));
             }
         }
+        
         
 
         
