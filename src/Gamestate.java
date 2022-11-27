@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
-/* 
+
     public class Gamestate {
 
         private static ArrayList<Player> players; // List of players
@@ -21,7 +21,7 @@ import java.util.TreeMap;
         private static ArrayList<Integer> deadPile;
         private static ArrayList<Integer> leftOverPile;
         private static TreeMap<Integer,Factory> factories;
-        private static GameFrame gameFrame;
+        //private static GameFrame gameFrame;
     
         public Gamestate() {
             players = new ArrayList<Player>();
@@ -29,7 +29,7 @@ import java.util.TreeMap;
             deadPile = new ArrayList<Integer>();
             leftOverPile = new ArrayList<Integer>();
             factories = new TreeMap<Integer,Factory>();
-            gameFrame = new GameFrame();
+            //gameFrame = new GameFrame();
     
         }
         // returns the total number of tiles in the bag
@@ -39,6 +39,12 @@ import java.util.TreeMap;
                 total += bag.get(i);
             }
             return total;
+        }
+        //sets a random player from the arraylist of players to start the game by giving them a starter tile - make sure the starter is checked at the beginning of the game
+        public static void setStarter(){
+            Random rand = new Random();
+            int randomPlayer = rand.nextInt(players.size());
+            players.get(randomPlayer).getPlayerLine().addStarterTile();
         }
         // returns athe total number of tiles in the dead pile
         public static int getDeadPileTotal(){
@@ -103,21 +109,42 @@ import java.util.TreeMap;
             for (int i = 0; i < tiles.size(); i++){
                 leftOverPile.add(tiles.get(i));
             }
+        } 
+        // returns the scores of the players in an arraylist
+        public static ArrayList<Integer> getPlayerScores(){
+            ArrayList<Integer> scores = new ArrayList<Integer>();
+            for (int i = 0; i < players.size(); i++){
+                scores.add(players.get(i).getScore().getTotal());
+            }
+            return scores;
+        }  
+        //checks if the left over pile is empty
+        public static boolean isLeftOverPileEmpty(){
+            if (leftOverPile.size() == 0){
+                return true;
+            }
+            return false;
         }
-        
-        
+        //checks if all the factories are empty
+        public static boolean areFactoriesEmpty(){
+            if (getFactoryTileCount() == 0){
+                return true;
+            }
+            return false;
+        }
+        //returns an arraylist of the factories that have tiles in them - gives the number of the factory
+        public static ArrayList<Integer> getAvailableFactories(){
+            ArrayList<Integer> factoriesWithTiles = new ArrayList<Integer>();
+            for (int i = 0; i < factories.size(); i++){
+                if (factories.get(i).getTileCount() > 0){
+                    factoriesWithTiles.add(i);
+                }
+            }
+            return factoriesWithTiles;
+        }
+        //returns the information of a single factory
+        public static ArrayList<Integer> getFactoryInfo(int factoryNumber){
+            return factories.get(factoryNumber).getFactoryContents();
+        }
 
-        
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
-*/

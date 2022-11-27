@@ -2,13 +2,16 @@ public class PlayerWall{
     // wall is an array of 5 rows and 5 columns
     Integer[][] wall;
     Integer recentTile;
+    Integer recentTileRow;
+    Integer recentTileColumn;
+
     public PlayerWall() {
         wall = new Integer[5][5];
-        wall[0][1] = 2;
-        wall[1][1] = 2;
-        wall[2][1] = 2;
-        wall[3][1] = 2;
-        wall[4][1] = 2;
+        wall[0][0] = 0; wall[0][1] = 0; wall[0][2] = 0; wall[0][3] = 0; wall[0][4] = 0;
+        wall[1][0] = 0; wall[1][1] = 0; wall[1][2] = 0; wall[1][3] = 0; wall[1][4] = 0;
+        wall[2][0] = 0; wall[2][1] = 0; wall[2][2] = 0; wall[2][3] = 0; wall[2][4] = 0;
+        wall[3][0] = 0; wall[3][1] = 0; wall[3][2] = 0; wall[3][3] = 0; wall[3][4] = 0;
+        wall[4][0] = 0; wall[4][1] = null; wall[4][2] = 0; wall[4][3] = 0; wall[4][4] = 0;        
 
     }
     // isRowAvailable checks if the row can take in the tile type in the specific row
@@ -41,6 +44,8 @@ public class PlayerWall{
         if(isRowAvailable(row, tileType)){
             wall[row][spot] = tileType;
             recentTile = tileType;
+            recentTileRow = row;
+            recentTileColumn = spot;
         }
     }
     // checks if any of the rows in the wall is full
@@ -61,6 +66,21 @@ public class PlayerWall{
         }
         return true;
     }
-
+    //get recent tile
+    public Integer getRecentTile(){
+        return recentTile;
+    }
+    //get recent tile row
+    public Integer getRecentTileRow(){
+        return recentTileRow;
+    }
+    //get recent tile column
+    public Integer getRecentTileColumn(){
+        return recentTileColumn;
+    }
+    //get wall
+    public Integer[][] getWall(){
+        return wall;
+    }
     
 }
