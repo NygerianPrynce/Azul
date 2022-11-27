@@ -5,9 +5,8 @@ private boolean isStarter;
 private PlayerWall pW;
 private PlayerLine pL; 
 private Scoring score;
-    public Player(int pNumber, boolean isStarter){
+    public Player(int pNumber){
         playerNumber = pNumber;
-        this.isStarter = isStarter;
         pW = new PlayerWall();
         pL = new PlayerLine(); 
         if(isStarter){
@@ -26,5 +25,17 @@ private Scoring score;
     //get score
     public Scoring getScore(){
         return score;
+    }
+    //get player number
+    public int getPlayerNumber(){
+        return playerNumber;
+    }
+    //make starter
+    public void makeStarter(){
+        isStarter = true;
+    }
+    //check if starter
+    public boolean isStarter(){
+        return isStarter;
     }
 }

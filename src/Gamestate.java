@@ -25,6 +25,11 @@ import java.util.TreeMap;
     
         public Gamestate() {
             players = new ArrayList<Player>();
+            players.add(new Player(0));
+            players.add(new Player(1));
+            players.add(new Player(2));
+            players.add(new Player(3));
+            setStarter();
             bag = new TreeMap<Integer,Integer>();
             deadPile = new ArrayList<Integer>();
             leftOverPile = new ArrayList<Integer>();
@@ -45,6 +50,8 @@ import java.util.TreeMap;
             Random rand = new Random();
             int randomPlayer = rand.nextInt(players.size());
             players.get(randomPlayer).getPlayerLine().addStarterTile();
+            players.get(randomPlayer).makeStarter();
+
         }
         // returns athe total number of tiles in the dead pile
         public static int getDeadPileTotal(){
