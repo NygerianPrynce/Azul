@@ -13,7 +13,7 @@ public class App {
         wall[3][0] = 0; wall[3][1] = 0; wall[3][2] = 0; wall[3][3] = 0; wall[3][4] = 0;
         wall[4][0] = 0; wall[4][1] = null; wall[4][2] = 0; wall[4][3] = 0; wall[4][4] = 0;
         //System.out.println(countRow(wall, 0, 1));
-        GameFrame graphicWindow = new GameFrame();
+        GameFrame graphicWindow = new GameFrame("Azul");
         
     }
     
