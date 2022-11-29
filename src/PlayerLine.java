@@ -28,10 +28,10 @@ public class PlayerLine {
         fLine[0] = 0;
         fLine[1] = 1;
         fLine[2] = 2;
-        fLine[3] = 3;
-        fLine[4] = 4;
-        fLine[5] = 5;
-        fLine[6] = 3;
+        fLine[3] = 2;
+        fLine[4] = 3;
+        fLine[5] = 1;
+        fLine[6] = 2;
         getLineContents();
     }
     //return linePlacements
@@ -51,7 +51,7 @@ public class PlayerLine {
     public int getRowSpace(Integer row){
         int spaceLeft = 0;
         for (int i = 0; i < pLine.get(row).length; i++){
-            if (pLine.get(row)[i] == null){
+            if (pLine.get(row)[i] == 6){
                 spaceLeft++;
             }
         }
@@ -61,7 +61,7 @@ public class PlayerLine {
     public int getRowType(Integer row){
         Integer type = null;
         for (int i = 0; i < pLine.get(row).length; i++){
-            if (pLine.get(row)[i] != null){
+            if (pLine.get(row)[i] != 6){
                 type = pLine.get(row)[i];
             }
         }
@@ -71,7 +71,7 @@ public class PlayerLine {
     public boolean isRowComplete(Integer row){
         boolean complete = true;
         for (int i = 0; i < pLine.get(row).length; i++){
-            if (pLine.get(row)[i] == null){
+            if (pLine.get(row)[i] == 6){
                 complete = false;
             }
         }
@@ -80,7 +80,7 @@ public class PlayerLine {
     // empties an array in the treemap
     public void emptyRow(Integer row){
         for (int i = 0; i < pLine.get(row).length; i++){
-            pLine.get(row)[i] = null;
+            pLine.get(row)[i] = 6;
         }
     }
     //adds an arraylist of tiles to an array in the treemap
@@ -88,7 +88,7 @@ public class PlayerLine {
         //check if the row has space for the tiles
         if (getRowSpace(row) >= tiles.size()){
             for (int i = 0; i < pLine.get(row).length; i++){
-                if (pLine.get(row)[i] == null){
+                if (pLine.get(row)[i] == 6){
                     pLine.get(row)[i] = tiles.get(0);
                     tiles.remove(0);
                 }
@@ -99,7 +99,7 @@ public class PlayerLine {
     public int getRowSize(Integer row){
         int size = 0;
         for (int i = 0; i < pLine.get(row).length; i++){
-            if (pLine.get(row)[i] != null){
+            if (pLine.get(row)[i] != 6){
                 size++;
             }
         }
@@ -120,14 +120,14 @@ public class PlayerLine {
     //add starter tile of value 5 to an available spot on the floor line
     public void addStarterTile(){
         for (int i = 0; i < fLine.length; i++){
-            if (fLine[i] == null){
+            if (fLine[i] == 6){
                 fLine[i] = 5;
                 break;
             }
         }
     }
     //finds the rows that can hold the tiles in the arraylist -- USE TO HIGHLIGHT
-    public ArrayList<Integer> availableRowsP(ArrayList<Integer> tiles){
+    public ArrayList<Integer> getAvailableRowsP(ArrayList<Integer> tiles){
         ArrayList<Integer> rows = new ArrayList<Integer>();
         for (int i = 0; i < pLine.size(); i++){
             if (getRowSpace(i) >= tiles.size()){
@@ -146,14 +146,14 @@ public class PlayerLine {
     //empty the floor line
     public void emptyFloorLine(){
         for (int i = 0; i < fLine.length; i++){
-            fLine[i] = null;
+            fLine[i] = 6;
         }
     }
     //return the number of tiles in the floor line
     public int getFloorLineSize(){
         int size = 0;
         for (int i = 0; i < fLine.length; i++){
-            if (fLine[i] != null){
+            if (fLine[i] != 6){
                 size++;
             }
         }
@@ -163,7 +163,7 @@ public class PlayerLine {
     public int getFloorLineSpace(){
         int space = 0;
         for (int i = 0; i < fLine.length; i++){
-            if (fLine[i] == null){
+            if (fLine[i] == 6){
                 space++;
             }
         }
@@ -180,7 +180,7 @@ public class PlayerLine {
     public void addFloorLine(ArrayList<Integer> tiles){
         if(isFloorLineAvailable(tiles)){
             for (int i = 0; i < fLine.length; i++){
-                if (fLine[i] == null){
+                if (fLine[i] == 6){
                     fLine[i] = tiles.get(0);
                     tiles.remove(0);
                 }

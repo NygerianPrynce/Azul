@@ -14,7 +14,7 @@ public class PlayerWall{
         wall[1][0] = 0; wall[1][1] = 0; wall[1][2] = 0; wall[1][3] = 0; wall[1][4] = 0;
         wall[2][0] = 0; wall[2][1] = 0; wall[2][2] = 0; wall[2][3] = 0; wall[2][4] = 0;
         wall[3][0] = 0; wall[3][1] = 0; wall[3][2] = 0; wall[3][3] = 0; wall[3][4] = 0;
-        wall[4][0] = 0; wall[4][1] = null; wall[4][2] = 0; wall[4][3] = 0; wall[4][4] = 0;        
+        wall[4][0] = 0; wall[4][1] = 6; wall[4][2] = 0; wall[4][3] = 0; wall[4][4] = 0;        
         //fill wallPlacements with arraylists of 3 integers
         for(int i = 0; i<5; i++){
             for(int j = 0; j<5; j++){
@@ -25,7 +25,6 @@ public class PlayerWall{
                 wallPlacements.add(temp);
             }
         }
-
     }
     //return wall placements
     public ArrayList<ArrayList<Integer>> getWallPlacements(){
@@ -83,7 +82,7 @@ public class PlayerWall{
     //checks if the row is full
     public boolean isRowFull(int row){
         for (int i = 0; i < 5; i++){
-            if (wall[row][i] == null){
+            if (wall[row][i] == 6){
                 return false;
             }
         }

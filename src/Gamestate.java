@@ -89,6 +89,10 @@ import java.util.TreeMap;
         public  Player getCurrentPlayer(){
             return players.get(0);
         }
+        //returns player at index
+        public  Player getPlayer(int index){
+            return players.get(index);
+        }
         // refills the bag
         public static  void refillBag(){
             for (int i = 0; i < deadPile.size(); i++){
