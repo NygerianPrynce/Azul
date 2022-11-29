@@ -1,10 +1,10 @@
 
-public class Player {
-private int playerNumber; 
-private boolean isStarter;
-private PlayerWall pW;
-private PlayerLine pL; 
-private Scoring score;
+ class Player {
+ int playerNumber; 
+ boolean isStarter;
+ PlayerWall pW;
+ PlayerLine pL; 
+Scoring score;
     public Player(int pNumber){
         playerNumber = pNumber;
         pW = new PlayerWall();

@@ -16,29 +16,34 @@ import java.util.TreeMap;
 
     public class Gamestate {
 
-        private static ArrayList<Player> players; // List of players
-        private static TreeMap<Integer,Integer> bag;
-        private static ArrayList<Integer> deadPile;
-        private static ArrayList<Integer> leftOverPile;
-        private static TreeMap<Integer,Factory> factories;
+        private  ArrayList<Player> players = new ArrayList<Player>(); // List of players
+        private static  ArrayList<Integer> bag = new ArrayList<Integer>(); 
+        private static  ArrayList<Integer> deadPile = new ArrayList<Integer>();
+        private  ArrayList<Integer> leftOverPile = new ArrayList<Integer>(21);
+        private  ArrayList<Factory> factories = new ArrayList<Factory>();
         //private static GameFrame gameFrame;
     
         public Gamestate() {
-            players = new ArrayList<Player>();
+            System.out.println("GAME GAME GAME");
             players.add(new Player(0));
             players.add(new Player(1));
             players.add(new Player(2));
             players.add(new Player(3));
             setStarter();
-            bag = new TreeMap<Integer,Integer>();
-            deadPile = new ArrayList<Integer>();
-            leftOverPile = new ArrayList<Integer>();
-            factories = new TreeMap<Integer,Factory>();
+            //fill treemap with 9 keys and 9 factory objects
+            for (int i = 0; i < 9; i++){
+                factories.add(new Factory());
+                System.out.println("put" + i);
+            }
+            //fill left over pile with 27 integers 0-5
+            for (int i = 0; i < 27; i++){
+                leftOverPile.add(i%6);
+            }
             //gameFrame = new GameFrame();
     
         }
         // returns the total number of tiles in the bag
-        public static int getBagTotal(){
+        public int getBagTotal(){
             int total = 0;
             for (int i = 0; i < bag.size(); i++){
                 total += bag.get(i);
@@ -46,7 +51,7 @@ import java.util.TreeMap;
             return total;
         }
         //sets a random player from the arraylist of players to start the game by giving them a starter tile - make sure the starter is checked at the beginning of the game
-        public static void setStarter(){
+        public void setStarter(){
             Random rand = new Random();
             int randomPlayer = rand.nextInt(players.size());
             players.get(randomPlayer).getPlayerLine().addStarterTile();
@@ -54,19 +59,15 @@ import java.util.TreeMap;
 
         }
         // returns athe total number of tiles in the dead pile
-        public static int getDeadPileTotal(){
+        public  int getDeadPileTotal(){
             int total = 0;
             for (int i = 0; i < deadPile.size(); i++){
                 total += deadPile.get(i);
             }
             return total;
         }
-        // returns the total number of tiles in the left over pile
-        public static int getLeftOverPileTotal(){
-            return leftOverPile.size();
-        }
         // returns the total number of tiles in the factories
-        public static int getFactoryTileCount(){
+        public  int getFactoryTileCount(){
             int total = 0;
             for (int i = 0; i < factories.size(); i++){
                 total += factories.get(i).getTileCount();
@@ -74,51 +75,67 @@ import java.util.TreeMap;
             return total;
         }
         // checks if the bag is empty
-        public static boolean isBagEmpty(){
+        public  boolean isBagEmpty(){
             if (getBagTotal() == 0){
                 return true;
             }
             return false;
         }
         // returns the player order
-        public static ArrayList<Player> getPlayerOrder(){
+        public ArrayList<Player> getPlayerOrder(){
             return players;
         }
         // returns the current player
-        public static Player getCurrentPlayer(){
+        public  Player getCurrentPlayer(){
             return players.get(0);
         }
         // refills the bag
-        public static void refillBag(){
+        public static  void refillBag(){
             for (int i = 0; i < deadPile.size(); i++){
-                bag.put(i, deadPile.get(i));
+                bag.add(deadPile.get(i));
             }
             deadPile.clear();
         }
         // refills the factories using getTilesFromBag(TreeMap<Integer, Integer> bag)
-        public static void refillFactories(){
+        public  void refillFactories(){
             for (int i = 0; i < factories.size(); i++){
                 Factory currentFactory = factories.get(i);
-                ArrayList<Integer> tiles = currentFactory.getTilesFromBag(bag);
+                ArrayList<Integer> tiles = currentFactory.getTilesFromBag();
                 currentFactory.fillFactory(tiles);
             }
         }
         // returns the number of tiles in the bag
-        public static int getBagSize(){
+        public  int getBagSize(){
             return bag.size();
         }
+        //gets the bag
+        public static  ArrayList<Integer> getBag(){
+            return bag;
+        }
         // returns the number of tiles in the dead pile
-        public static int getDeadPileSize(){
+        public int getDeadPileSize(){
             return deadPile.size();
         }
         // add arraylist of ties to the left over pile
-        public static void addToLeftOverPile(ArrayList<Integer> tiles){
+        public  void addToLeftOverPile(ArrayList<Integer> tiles){
             for (int i = 0; i < tiles.size(); i++){
                 leftOverPile.add(tiles.get(i));
             }
         } 
+        //get discard pile size
+        public  int getLeftOverPileSize(){
+            if(leftOverPile.isEmpty()){
+                return 0;
+            } else{            
+                return leftOverPile.size();
+            }
+        }
+        //gets discard pile
+        public  ArrayList<Integer> getLeftOverPile(){
+            return leftOverPile;
+        }
         // returns the scores of the players in an arraylist
-        public static ArrayList<Integer> getPlayerScores(){
+        public  ArrayList<Integer> getPlayerScores(){
             ArrayList<Integer> scores = new ArrayList<Integer>();
             for (int i = 0; i < players.size(); i++){
                 scores.add(players.get(i).getScore().getTotal());
@@ -126,21 +143,21 @@ import java.util.TreeMap;
             return scores;
         }  
         //checks if the left over pile is empty
-        public static boolean isLeftOverPileEmpty(){
+        public  boolean isLeftOverPileEmpty(){
             if (leftOverPile.size() == 0){
                 return true;
             }
             return false;
         }
         //checks if all the factories are empty
-        public static boolean areFactoriesEmpty(){
+        public boolean areFactoriesEmpty(){
             if (getFactoryTileCount() == 0){
                 return true;
             }
             return false;
         }
         //returns an arraylist of the factories that have tiles in them - gives the number of the factory
-        public static ArrayList<Integer> getAvailableFactories(){
+        public ArrayList<Integer> getAvailableFactories(){
             ArrayList<Integer> factoriesWithTiles = new ArrayList<Integer>();
             for (int i = 0; i < factories.size(); i++){
                 if (factories.get(i).getTileCount() > 0){
@@ -150,7 +167,7 @@ import java.util.TreeMap;
             return factoriesWithTiles;
         }
         //returns the information of a single factory
-        public static ArrayList<Integer> getFactoryInfo(int factoryNumber){
+        public ArrayList<Integer> getFactoryInfo(int factoryNumber){
             return factories.get(factoryNumber).getFactoryContents();
         }
 

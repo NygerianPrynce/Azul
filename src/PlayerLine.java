@@ -10,19 +10,42 @@ public class PlayerLine {
     //constructor class that initializes a tree map called pLine that holds integers as keys and an array as the values
     TreeMap<Integer, Integer[]> pLine;
     Integer[] fLine;
+    ArrayList<ArrayList<Integer>> linePlacements = new ArrayList<ArrayList<Integer>>();
     public PlayerLine(){
         pLine = new TreeMap<Integer, Integer[]>();
-        fLine = new Integer[5];
+        fLine = new Integer[7];
         //add an array of 1 integer to the treemap
-        pLine.put(0, new Integer[]{null});
+        pLine.put(0, new Integer[]{3});
         //add an array of 2 nulls to the treemap
-        pLine.put(1, new Integer[]{null, null});
+        pLine.put(1, new Integer[]{3, 3});
         //add an array of 3 nulls to the treemap
-        pLine.put(2, new Integer[]{null, null, null});
+        pLine.put(2, new Integer[]{3, 3, 3});
         //add an array of 4 nulls to the treemap
-        pLine.put(3, new Integer[]{null, null, null, null});
+        pLine.put(3, new Integer[]{3, 3, 3, 3});
         //add an array of 5 nulls to the treemap
-        pLine.put(4, new Integer[]{null, null, null, null, null});
+        pLine.put(4, new Integer[]{3, 3, 3, 3, 3});
+        //FILL THE FLOOR LINE WITH INTEGERS 0-7
+        fLine[0] = 0;
+        fLine[1] = 1;
+        fLine[2] = 2;
+        fLine[3] = 3;
+        fLine[4] = 4;
+        fLine[5] = 5;
+        fLine[6] = 3;
+        getLineContents();
+    }
+    //return linePlacements
+    public ArrayList<ArrayList<Integer>> getLinePlacements(){
+        System.out.println(linePlacements);
+        return linePlacements;
+    }
+    //transform the floorline into an arraylist of integers
+    public ArrayList<Integer> getFloorLine(){
+        ArrayList<Integer> floorLine = new ArrayList<Integer>();
+        for (int i = 0; i < fLine.length; i++){
+            floorLine.add(fLine[i]);
+        }
+        return floorLine;
     }
     //gets the  amount of space left in an array in the treemap
     public int getRowSpace(Integer row){
@@ -72,6 +95,28 @@ public class PlayerLine {
             }
         }   
     }
+    //find the amouunt of tiles in a row
+    public int getRowSize(Integer row){
+        int size = 0;
+        for (int i = 0; i < pLine.get(row).length; i++){
+            if (pLine.get(row)[i] != null){
+                size++;
+            }
+        }
+        return size;
+    }
+    //get treemap contents in the form of an arraylist, the first value will store the type, the second value will store the amount of tiles, and the third will store the row
+    public void getLineContents(){
+        for (int i = 0; i < pLine.size(); i++){
+            ArrayList<Integer> lineContents = new ArrayList<Integer>();
+            if (getRowType(i) > -1){
+                lineContents.add(getRowType(i));
+                lineContents.add(getRowSize(i));
+                lineContents.add(i);
+            }
+            linePlacements.add(lineContents);
+        }
+    }
     //add starter tile of value 5 to an available spot on the floor line
     public void addStarterTile(){
         for (int i = 0; i < fLine.length; i++){
@@ -105,7 +150,7 @@ public class PlayerLine {
         }
     }
     //return the number of tiles in the floor line
-    public int getFloorLine(){
+    public int getFloorLineSize(){
         int size = 0;
         for (int i = 0; i < fLine.length; i++){
             if (fLine[i] != null){

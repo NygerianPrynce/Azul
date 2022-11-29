@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 public class PlayerWall{
     // wall is an array of 5 rows and 5 columns
     Integer[][] wall;
     Integer recentTile;
     Integer recentTileRow;
     Integer recentTileColumn;
+    ArrayList<ArrayList<Integer>> wallPlacements = new ArrayList<ArrayList<Integer>>();
 
     public PlayerWall() {
         wall = new Integer[5][5];
@@ -12,7 +15,21 @@ public class PlayerWall{
         wall[2][0] = 0; wall[2][1] = 0; wall[2][2] = 0; wall[2][3] = 0; wall[2][4] = 0;
         wall[3][0] = 0; wall[3][1] = 0; wall[3][2] = 0; wall[3][3] = 0; wall[3][4] = 0;
         wall[4][0] = 0; wall[4][1] = null; wall[4][2] = 0; wall[4][3] = 0; wall[4][4] = 0;        
+        //fill wallPlacements with arraylists of 3 integers
+        for(int i = 0; i<5; i++){
+            for(int j = 0; j<5; j++){
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(3);
+                temp.add(i);
+                temp.add(j);
+                wallPlacements.add(temp);
+            }
+        }
 
+    }
+    //return wall placements
+    public ArrayList<ArrayList<Integer>> getWallPlacements(){
+        return wallPlacements;
     }
     // isRowAvailable checks if the row can take in the tile type in the specific row
     public boolean isRowAvailable(int row, int tileType){
@@ -42,10 +59,16 @@ public class PlayerWall{
     public void addTile(int row, int tileType){
         int spot = findPosition(row, tileType);
         if(isRowAvailable(row, tileType)){
+            //arraylist that holds the row, spot, and tile type
+            ArrayList<Integer> tile = new ArrayList<Integer>();
+            tile.add(tileType);
+            tile.add(row);
+            tile.add(spot);
             wall[row][spot] = tileType;
             recentTile = tileType;
             recentTileRow = row;
             recentTileColumn = spot;
+            wallPlacements.add(tile);
         }
     }
     // checks if any of the rows in the wall is full

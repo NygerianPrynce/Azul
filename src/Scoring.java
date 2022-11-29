@@ -5,7 +5,7 @@ public class Scoring{
     Integer recentTileColumn;
     Integer[][] playerWall;
     public Scoring(Player player) {
-        total = 0;
+        total = 32;
         playerWall = player.getPlayerWall().getWall();
         recentTile = player.getPlayerWall().getRecentTile();
         recentTileRow = player.getPlayerWall().getRecentTileRow();

@@ -11,32 +11,39 @@ public class Factory {
     ArrayList<Integer> factory;
     public Factory() {
         factory = new ArrayList<Integer>();
+        factory.add(0);
+        factory.add(1);
+        factory.add(2);
+        factory.add(3);
     }
     //fill factory with tiles
     public void fillFactory(ArrayList<Integer> tiles){
+        factory.clear();
         factory = tiles;
     }
-    // get arraylist of tiles
+    // get arraylist of tiles but return an arraylist with added nulls until there are 4 objects in the arraylist
     public ArrayList<Integer> getFactoryContents(){
-        return factory;
+        ArrayList<Integer> send = factory;
+        while (send.size() < 4){
+            send.add(6);
+        }
+        return send;
     }
-    public ArrayList getTilesFromBag(TreeMap<Integer, Integer> bag){
+    public static ArrayList getTilesFromBag(){
         ArrayList<Integer> tiles = new ArrayList<Integer>();
         for (int i = 0; i < 4; i++){
             Boolean tileFound = false;
             while (!tileFound){
-                int random = (int)(Math.random() * bag.size());
-                int tileTypeCount = bag.get(random);
-                if (tileTypeCount > 0){
-                    tiles.add(random);
-                    bag.put(random, tileTypeCount - 1);
+                if(Gamestate.getBag().size() == 0){
+                    Gamestate.refillBag();
+                } else{
+                    int random = (int)(Math.random() * Gamestate.getBag().size());
+                    int tileType = Gamestate.getBag().get(random);
+                    tiles.add(tileType);
+                    Gamestate.getBag().remove(random);
                     tileFound = true;
                 }
-                else{
-                    if(Gamestate.getBagTotal() == 0){
-                        Gamestate.refillBag();
-                    }
-                }
+
             }
         }
         return tiles;
@@ -54,9 +61,10 @@ public class Factory {
         return removedTiles;
     }
     //adds the tiles in the factory to the discard pile in game state
-    public void moveLeftOvers(){
-        Gamestate.addToLeftOverPile(getFactoryContents());
+    public ArrayList<Integer> moveLeftOvers(){
+        ArrayList<Integer> leftOvers = getFactoryContents();
         factory.clear();
+        return leftOvers;
     }
     //clear factory
     public void clearFactory(){
