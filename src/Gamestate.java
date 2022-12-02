@@ -24,23 +24,48 @@ import java.util.TreeMap;
         //private static GameFrame gameFrame;
     
         public Gamestate() {
-            System.out.println("GAME GAME GAME");
+            System.out.println("Game has begun");
             players.add(new Player(0));
             players.add(new Player(1));
             players.add(new Player(2));
             players.add(new Player(3));
             setStarter();
+            cycleToStarter();
             //fill treemap with 9 keys and 9 factory objects
             for (int i = 0; i < 9; i++){
                 factories.add(new Factory());
-                System.out.println("put" + i);
             }
-            //fill left over pile with 27 integers 0-5
-            for (int i = 0; i < 27; i++){
-                leftOverPile.add(i%6);
-            }
-            //gameFrame = new GameFrame();
+            System.out.println("Factories created");
+            //add a single 3 tile to the left over pile
+            leftOverPile.add(3);
     
+        }
+        //add arraylist of integers to the dead pile
+        public void addToDeadPile(ArrayList<Integer> tiles){
+            deadPile.addAll(tiles);
+        }
+        //method to cycle the players
+        public void cyclePlayers(){
+            Player temp = players.get(0);
+            players.remove(0);
+            players.add(temp);
+        }
+        //check if player is starter for all 5
+        public Player findStarter(){
+            Player starter = null;
+            for (int i = 0; i < players.size(); i++){
+                if (players.get(i).isStarter()){
+                    starter = players.get(i);
+                }
+            }
+            return starter;
+        }
+        //cycle the players until the player with the starter tile is first in the arraylist
+        public void cycleToStarter(){
+            Player starter = findStarter();
+            while (starter != players.get(0)){
+                cyclePlayers();
+            }
         }
         // returns the total number of tiles in the bag
         public int getBagTotal(){
@@ -58,6 +83,10 @@ import java.util.TreeMap;
             players.get(randomPlayer).makeStarter();
 
         }
+        //get a factory from the treemap of factories
+        public Factory getFactory(int factoryNumber){
+            return factories.get(factoryNumber);
+        }
         // returns athe total number of tiles in the dead pile
         public  int getDeadPileTotal(){
             int total = 0;
@@ -71,6 +100,13 @@ import java.util.TreeMap;
             int total = 0;
             for (int i = 0; i < factories.size(); i++){
                 total += factories.get(i).getTileCount();
+            }
+            return total;
+        }
+        public  int getFactoryTileCountRaw(){
+            int total = 0;
+            for (int i = 0; i < factories.size(); i++){
+                total += factories.get(i).getTileCountRaw();
             }
             return total;
         }
@@ -127,7 +163,7 @@ import java.util.TreeMap;
             }
         } 
         //get discard pile size
-        public  int getLeftOverPileSize(){
+        public int getLeftOverPileSize(){
             if(leftOverPile.isEmpty()){
                 return 0;
             } else{            
@@ -137,6 +173,25 @@ import java.util.TreeMap;
         //gets discard pile
         public  ArrayList<Integer> getLeftOverPile(){
             return leftOverPile;
+        }
+        //pull every instance of a tile in the leftOverpile and put it in an arraylist and remove it from the left over pile
+        public  ArrayList<Integer> pullFromLeftOverPile(int tile){
+            ArrayList<Integer> tiles = new ArrayList<Integer>();
+            for (int i = 0; i < leftOverPile.size(); i++){
+                if (leftOverPile.get(i) == tile){
+                    tiles.add(leftOverPile.get(i));
+                    leftOverPile.remove(i);
+                }
+            }
+            return tiles;
+        }
+        //return specific tile from left over pile
+        public  int getLeftOverPileTile(int index){
+            return leftOverPile.get(index);
+        }
+        //returns end of phase boolean
+        public  boolean endOfPhase(){
+            return getLeftOverPileSize() == 0 && getFactoryTileCountRaw() == 0;
         }
         // returns the scores of the players in an arraylist
         public  ArrayList<Integer> getPlayerScores(){

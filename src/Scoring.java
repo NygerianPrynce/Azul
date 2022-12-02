@@ -4,20 +4,27 @@ public class Scoring{
     Integer recentTileRow;
     Integer recentTileColumn;
     Integer[][] playerWall;
+    Player player;
     public Scoring(Player player) {
-        total = 12;
+        this.player = player;
+        total = 0;
+    }
+    //score horizontal and vertical in a method called score normal
+    //UPDATE THIS METHOD
+    public void update(){
         playerWall = player.getPlayerWall().getWall();
         recentTile = player.getPlayerWall().getRecentTile();
         recentTileRow = player.getPlayerWall().getRecentTileRow();
         recentTileColumn = player.getPlayerWall().getRecentTileColumn();
     }
     public int scoreVertical(){
+        update();
         int count = 0;
         count++;
         //row changes column stays the same
         System.out.println("round 1");
         for(int i = recentTileRow+1; i<5; i++){
-            if(playerWall[i][recentTileColumn] == null){
+            if(playerWall[i][recentTileColumn] == 6){
                 i = 21;
             }else{
                 count++;
@@ -26,7 +33,7 @@ public class Scoring{
         }
         System.out.println("round 2");
         for(int i = recentTileRow-1; i>-1 && i<5; i--){
-            if(playerWall[i][recentTileColumn] == null){
+            if(playerWall[i][recentTileColumn] == 6){
                 i = 21;
             }else{
                 count++;
@@ -37,12 +44,13 @@ public class Scoring{
         return count;
     }
     public int scoreHorizontal(){
+        update();
         int count = 0;
         count++;
         //column changes row stays the same
         System.out.println("round 1");
         for(int i = recentTileColumn+1; i<5; i++){
-            if(playerWall[recentTileRow][i] == null){
+            if(playerWall[recentTileRow][i] == 6){
                 i = 21;
             }else{
                 count++;
@@ -51,7 +59,7 @@ public class Scoring{
         }
         System.out.println("round 2");
         for(int i = recentTileColumn-1; i>-1 && i<5; i--){
-            if(playerWall[recentTileRow][i] == null){
+            if(playerWall[recentTileRow][i] == 6){
                 i = 21;
             }else{
                 count++;
@@ -63,18 +71,21 @@ public class Scoring{
     }
     //subtract a number from a parameter -- CHANGE ONCE PLAYER LINE IS MADE
     public int subtractFloorLine(int floorLinevalue){
+        update();
         total = total - floorLinevalue;
         return total;
     }
     //get total
     public int getTotal(){
+        update();
         return total;
     }
     //counts the amount of times a row is full
     public int countFullRows(){
+        update();
         int count = 0;
         for(int i = 0; i<5; i++){
-            if(playerWall[i][0] != null && playerWall[i][1] != null && playerWall[i][2] != null && playerWall[i][3] != null && playerWall[i][4] != null){
+            if(playerWall[i][0] != 6 && playerWall[i][1] != 6 && playerWall[i][2] != 6 && playerWall[i][3] != 6 && playerWall[i][4] != 6){
                 count++;
             }
         }
@@ -82,9 +93,10 @@ public class Scoring{
     }
     //counts the amount of times a column is full
     public int countFullColumns(){
+        update();
         int count = 0;
         for(int i = 0; i<5; i++){
-            if(playerWall[0][i] != null && playerWall[1][i] != null && playerWall[2][i] != null && playerWall[3][i] != null && playerWall[4][i] != null){
+            if(playerWall[0][i] != 6 && playerWall[1][i] != 6 && playerWall[2][i] != 6 && playerWall[3][i] != 6 && playerWall[4][i] != 6){
                 count++;
             }
         }
@@ -92,6 +104,7 @@ public class Scoring{
     }
     //counts how many times a tile is present in the wall
     public int countTile(Integer tile){
+        update();
         int count = 0;
         for(int i = 0; i<5; i++){
             for(int j = 0; j<5; j++){
@@ -107,6 +120,7 @@ public class Scoring{
     }
     // repeats countTile for every type of tile
     public int countAllTiles(){
+        update();
         int count = 0;
         for(int i = 0; i<5; i++){
             count = count + countTile(i);
@@ -115,11 +129,19 @@ public class Scoring{
     }
     // runs countAllTiles and countFullRows and countFullColumns
     public int scoreBonus(){
+        update();
         int count = 0;
         count = count + countAllTiles();
         count = count + countFullRows();
         count = count + countFullColumns();
         return count;
+    }
+    //score normal method which does score vertical and horizontal and the floor line
+    public void scoreNormal(){
+        update();
+        scoreVertical();
+        scoreHorizontal();
+        subtractFloorLine(1);
     }
 
 

@@ -11,11 +11,16 @@ public class Factory {
     ArrayList<Integer> factory;
     public Factory() {
         factory = new ArrayList<Integer>();
-        factory.add(0);
-        factory.add(1);
-        factory.add(2);
-        factory.add(3);
+        //factory.add(0);
+        //factory.add(1);
+        //factory.add(2);
+        //factory.add(3);
     }
+    //get a tile from the factory
+    public int getTile(int tile){
+        return factory.get(tile);
+    }
+
     //fill factory with tiles
     public void fillFactory(ArrayList<Integer> tiles){
         factory.clear();
@@ -26,6 +31,16 @@ public class Factory {
         ArrayList<Integer> send = factory;
         while (send.size() < 4){
             send.add(6);
+        }
+        return send;
+    }
+    //sends an arraylist of all the integers in the arraylist except for 6
+    public ArrayList<Integer> getRawFactoryContents(){
+        ArrayList<Integer> send = factory;
+        for (int i = 0; i < send.size(); i++){
+            if (send.get(i) == 6){
+                send.remove(i);
+            }
         }
         return send;
     }
@@ -54,7 +69,7 @@ public class Factory {
         for (int i = 0; i < factory.size(); i++){
             if (factory.get(i) == tileType){
                 removedTiles.add(factory.get(i));
-                factory.remove(i);
+                factory.set(i,6);
                 i--;
             }
         }
@@ -62,13 +77,22 @@ public class Factory {
     }
     //adds the tiles in the factory to the discard pile in game state
     public ArrayList<Integer> moveLeftOvers(){
-        ArrayList<Integer> leftOvers = getFactoryContents();
-        factory.clear();
+        ArrayList<Integer> leftOvers = new ArrayList<Integer>();
+        //add contents of getrawfactorycontents to arraylist left overs
+        for (int i = 0; i < getRawFactoryContents().size(); i++){
+            leftOvers.add(getRawFactoryContents().get(i));
+        }
+        clearFactory();
         return leftOvers;
     }
     //clear factory
     public void clearFactory(){
+        //make all 4 spots in the factory hold integer 6
         factory.clear();
+        factory.add(6);
+        factory.add(6);
+        factory.add(6);
+        factory.add(6);
     }
     // to string retunrs a string of the factory contents
     public String toString(){
@@ -81,6 +105,16 @@ public class Factory {
     // returns the number of integers in the arraylist
     public int getTileCount(){
         return factory.size();
+    }
+    public int getTileCountRaw(){
+        //returns the number of integers in the arraylist except for 6
+        int count = 0;
+        for (int i = 0; i < factory.size(); i++){
+            if (factory.get(i) != 6){
+                count++;
+            }
+        }
+        return count;
     }
 
 

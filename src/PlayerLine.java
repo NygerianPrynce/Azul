@@ -17,26 +17,26 @@ public class PlayerLine {
         //add an array of 1 integer to the treemap
         pLine.put(0, new Integer[]{3});
         //add an array of 2 nulls to the treemap
-        pLine.put(1, new Integer[]{3, 3});
+        pLine.put(1, new Integer[]{2, 2});
         //add an array of 3 nulls to the treemap
-        pLine.put(2, new Integer[]{3, 3, 3});
+        pLine.put(2, new Integer[]{6, 3, 3});
         //add an array of 4 nulls to the treemap
-        pLine.put(3, new Integer[]{3, 3, 3, 3});
+        pLine.put(3, new Integer[]{6, 3, 3, 3});
         //add an array of 5 nulls to the treemap
-        pLine.put(4, new Integer[]{3, 3, 3, 3, 3});
+        pLine.put(4, new Integer[]{6, 6, 6, 6, 6});
         //FILL THE FLOOR LINE WITH INTEGERS 0-7
-        fLine[0] = 0;
-        fLine[1] = 1;
-        fLine[2] = 2;
-        fLine[3] = 2;
-        fLine[4] = 3;
-        fLine[5] = 1;
-        fLine[6] = 2;
+        fLine[0] = 6;
+        fLine[1] = 6;
+        fLine[2] = 6;
+        fLine[3] = 6;
+        fLine[4] = 6;
+        fLine[5] = 6;
+        fLine[6] = 6;
         getLineContents();
     }
     //return linePlacements
     public ArrayList<ArrayList<Integer>> getLinePlacements(){
-        System.out.println(linePlacements);
+        getLineContents();
         return linePlacements;
     }
     //transform the floorline into an arraylist of integers
@@ -59,7 +59,7 @@ public class PlayerLine {
     }
     //gets the type of tiles in an array in the treemap
     public int getRowType(Integer row){
-        Integer type = null;
+        Integer type = 6;
         for (int i = 0; i < pLine.get(row).length; i++){
             if (pLine.get(row)[i] != 6){
                 type = pLine.get(row)[i];
@@ -77,10 +77,62 @@ public class PlayerLine {
         }
         return complete;
     }
+    //return an arraylist of an arraylist that holds the row and type of all the rows that are true for isRowComplete
+    public ArrayList<ArrayList<Integer>> getCompleteRows(){
+        ArrayList<ArrayList<Integer>> completeRows = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < pLine.size(); i++){
+            if (isRowComplete(i)){
+                ArrayList<Integer> row = new ArrayList<Integer>();
+                row.add(i);
+                row.add(getRowType(i));
+                completeRows.add(row);
+            }
+        }
+        return completeRows;
+    }
+    //clear a row on the player line
+    public ArrayList<Integer> clearRow(Integer row){
+        //arraylist of discarded tiles
+        ArrayList<Integer> discardedTiles = new ArrayList<Integer>();
+        for (int i = 0; i < pLine.get(row).length; i++){
+            Integer temp = pLine.get(row)[i];
+            discardedTiles.add(temp);
+            pLine.get(row)[i] = 6;
+        }
+        System.out.println("Row " + row + " has been cleared");
+        return discardedTiles;
+    }
+    //clear the complete rows on the player line
+    public ArrayList<Integer> clearCompleteRows(){
+        ArrayList<Integer> discardedTiles = new ArrayList<Integer>();
+        for (int a = 0; a < pLine.size(); a++){
+            if (isRowComplete(a)){
+                System.out.println("ROW TO BE REMOVED:" + a);
+                ArrayList<Integer> dT = clearRow(a);
+                for (int i = 0; i < dT.size(); i++){
+                    discardedTiles.add(dT.get(i));
+                }
+                //print a row on the player line
+                printPlayerLine();
+            }
+        }
+        getLineContents();
+        return discardedTiles;
+    }
     // empties an array in the treemap
     public void emptyRow(Integer row){
         for (int i = 0; i < pLine.get(row).length; i++){
             pLine.get(row)[i] = 6;
+        }
+    }
+    //print player line
+    public void printPlayerLine(){
+        //print a row on the player line
+        for(int i = 0; i < pLine.size(); i++){
+            for(int j = 0; j < pLine.get(i).length; j++){
+                System.out.print(pLine.get(i)[j] + " ");
+            }
+            System.out.println();
         }
     }
     //adds an arraylist of tiles to an array in the treemap
@@ -88,12 +140,19 @@ public class PlayerLine {
         //check if the row has space for the tiles
         if (getRowSpace(row) >= tiles.size()){
             for (int i = 0; i < pLine.get(row).length; i++){
-                if (pLine.get(row)[i] == 6){
+                if (pLine.get(row)[i] == 6 && tiles.size() >0 && pLine.get(row)[0] == 6){
+                    pLine.get(row)[i] = tiles.get(0);
+                    tiles.remove(0);
+                } else if(pLine.get(row)[i] == 6 && tiles.size() >0 && getRowType(row) == tiles.get(0)){
                     pLine.get(row)[i] = tiles.get(0);
                     tiles.remove(0);
                 }
             }
         }   
+    }
+    //get first tile in floor line
+    public int getFirstTile(){
+        return fLine[0];
     }
     //find the amouunt of tiles in a row
     public int getRowSize(Integer row){
@@ -107,6 +166,7 @@ public class PlayerLine {
     }
     //get treemap contents in the form of an arraylist, the first value will store the type, the second value will store the amount of tiles, and the third will store the row
     public void getLineContents(){
+        linePlacements = new ArrayList<ArrayList<Integer>>();
         for (int i = 0; i < pLine.size(); i++){
             ArrayList<Integer> lineContents = new ArrayList<Integer>();
             if (getRowType(i) > -1){
@@ -131,7 +191,13 @@ public class PlayerLine {
         ArrayList<Integer> rows = new ArrayList<Integer>();
         for (int i = 0; i < pLine.size(); i++){
             if (getRowSpace(i) >= tiles.size()){
-                rows.add(i);
+                if(getRowType(i) != 6 && getRowType(i) == tiles.get(0)){
+                    rows.add(i);
+                }
+                if(getRowType(i) == 6){
+                    rows.add(i);
+                }
+                
             }
         }
         return rows;
@@ -180,7 +246,7 @@ public class PlayerLine {
     public void addFloorLine(ArrayList<Integer> tiles){
         if(isFloorLineAvailable(tiles)){
             for (int i = 0; i < fLine.length; i++){
-                if (fLine[i] == 6){
+                if (fLine[i] == 6 && tiles.size()>0){
                     fLine[i] = tiles.get(0);
                     tiles.remove(0);
                 }

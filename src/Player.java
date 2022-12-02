@@ -19,9 +19,11 @@ ArrayList<Integer> tilesInPosession = new ArrayList<Integer>();
         }
         score = new Scoring(this);
         //add 4 integers 0-5 to the arraylist tilesInPosession
-        tilesInPosession.add(4);
-        tilesInPosession.add(4);
-        tilesInPosession.add(4);
+
+    }
+    //clear player possesion
+    public void clearPlayerPossession(){
+        tilesInPosession.clear();
     }
     //get player wall
     public PlayerWall getPlayerWall(){
