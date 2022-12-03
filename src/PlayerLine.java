@@ -17,20 +17,20 @@ public class PlayerLine {
         //add an array of 1 integer to the treemap
         pLine.put(0, new Integer[]{6});
         //add an array of 2 nulls to the treemap
-        pLine.put(1, new Integer[]{6, 6});
+        pLine.put(1, new Integer[]{3, 6});
         //add an array of 3 nulls to the treemap
-        pLine.put(2, new Integer[]{6, 6, 6});
+        pLine.put(2, new Integer[]{3, 3, 6});
         //add an array of 4 nulls to the treemap
-        pLine.put(3, new Integer[]{6, 6, 6, 6});
+        pLine.put(3, new Integer[]{3, 3, 3, 6});
         //add an array of 5 nulls to the treemap
-        pLine.put(4, new Integer[]{6, 6, 6, 6, 6});
+        pLine.put(4, new Integer[]{3, 3, 3, 3, 6});
         //FILL THE FLOOR LINE WITH INTEGERS 0-7
-        fLine[0] = 6;
-        fLine[1] = 6;
-        fLine[2] = 6;
-        fLine[3] = 6;
-        fLine[4] = 6;
-        fLine[5] = 6;
+        fLine[0] = 3;
+        fLine[1] = 4;
+        fLine[2] = 4;
+        fLine[3] = 3;
+        fLine[4] = 2;
+        fLine[5] = 1;
         fLine[6] = 6;
         getLineContents();
     }

@@ -27,8 +27,10 @@ public class GamePanel extends JPanel implements MouseListener{
     boolean tilesAdded = false;
     boolean nextTurn = false;
     boolean wallTilingPhase = false;
+    boolean gameOver = false;
     int repainted = 0;
     Integer winner = null;
+    Player playerWinner = null;
     public GamePanel(){
         game = new Gamestate();
         try{
@@ -408,7 +410,11 @@ public class GamePanel extends JPanel implements MouseListener{
                         game.getCurrentPlayer().getPlayerLine().emptyFloorLine();
                         if(game.getCurrentPlayer().getPlayerWall().isGameOver()){
                             System.out.println("GEE GEE GAME OVER");
-                            winner = i;
+                            game.getCurrentPlayer().getScore().scoreBonus();
+                            winner = game.getCurrentPlayer().getPlayerNumber();
+                            playerWinner = game.getCurrentPlayer();
+                            gameStarted = false;
+                            game.removeWinner();
                             //SET THE STATE 0 TO 3
                             state.set(0, 2);
                         }
@@ -460,10 +466,24 @@ public class GamePanel extends JPanel implements MouseListener{
             repainted++;
             System.out.println("Board repaint number: " + repainted);
                 g.drawImage(bg2, 0, 0, getWidth(), getHeight(), null);
-                //draws playe rnumbers
+                //close to the top right corner of the screen write "press the next button"
+            g.setColor(Color.red);
+            g.setFont(new Font("Helvetica", Font.BOLD, 23));
+            if(nextTurn){
+                g.drawString("CLICK THE NEXT BUTTON", getWidth()/10, getHeight()/2 - getHeight()/3);
+            } else if(tilesPicked){
+                g.drawString("PICK THE ROW OR THE FLOOR LINE", getWidth()/10, getHeight()/2 - getHeight()/3);
+            }
+            else if(tilesAdded){
+                g.drawString("WALL TILING PHASE HAS BEEN COMPLETED", getWidth()/8, getHeight()/2 - getHeight()/3);
+                g.drawString("CLICK THE NEXT BUTTON", getWidth()/10, getHeight()/2 - getHeight()/3 + getHeight()/10);
+            } else{
+                g.drawString("PICK THE FACTORY OR THE FLOOR", getWidth()/10, getHeight()/2 - getHeight()/3);
+            }
+                //draws player numbers
                 for(int i = 0; i<4; i++){
                     Integer pNumber = game.getPlayer(i).getPlayerNumber() + 1;
-                    g.setColor(Color.RED);
+                    g.setColor(Color.BLACK);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
                     if(i == 0){
                         g.drawString("Player " + pNumber, playerBoardSizes[i][0] + getWidth()/7, playerBoardSizes[i][1] - getHeight()/200);
@@ -672,6 +692,11 @@ public class GamePanel extends JPanel implements MouseListener{
             g.setColor(Color.WHITE);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
             g.drawString("Player " + winner + " wins!", getWidth()/2 - getWidth()/8, getHeight()/2);
+            //draw the player standings
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+            g.drawString("Player " +  game.getPlayer(0).getPlayerNumber() + ": " + game.getPlayer(0).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10);
+            g.drawString("Player " +  game.getPlayer(1).getPlayerNumber() + ": " + game.getPlayer(1).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10 + getHeight()/20);
+            g.drawString("Player " +  game.getPlayer(2).getPlayerNumber() + ": " + game.getPlayer(2).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10 + getHeight()/10);
         }
         
     }
@@ -679,20 +704,46 @@ public class GamePanel extends JPanel implements MouseListener{
         Integer ttype = game.getFactory(factory).getTile(tile);
         ArrayList<Integer> pPossesion = game.getFactory(factory).removeTiles(ttype);
         game.getCurrentPlayer().addTilesToPossession(pPossesion);
+        ArrayList<Integer> availableRows = game.getCurrentPlayer().getPlayerLine().getAvailableRowsP(pPossesion);
+        Boolean isAvailable = game.getCurrentPlayer().getPlayerLine().isFloorLineAvailable(pPossesion);
         game.addToLeftOverPile(game.getFactory(factory).moveLeftOvers());
         tilesPicked = true;
         state.set(1,1);
         repaint();
+        if(!availableRows.contains(0) && !availableRows.contains(1) && !availableRows.contains(2) && !availableRows.contains(3) && !availableRows.contains(4) && !isAvailable){
+            game.addToDeadPile(pPossesion);
+            game.getCurrentPlayer().clearPlayerPossession();
+            tilesAdded = true;
+            game.getCurrentPlayer().getPlayerLine().getLineContents();
+            state.set(1,0);
+            if(game.endOfPhase()){
+                wallTilingPhase = true; 
+            }
+            nextTurn = true;
+        } 
     }
     public void leftOverPileMovements(Integer tile){
         Integer ttype = game.getLeftOverPileTile(0);
         ArrayList<Integer> pPossesion = game.pullFromLeftOverPile(ttype);
         game.getCurrentPlayer().addTilesToPossession(pPossesion);
+        ArrayList<Integer> availableRows = game.getCurrentPlayer().getPlayerLine().getAvailableRowsP(pPossesion);
+        Boolean isAvailable = game.getCurrentPlayer().getPlayerLine().isFloorLineAvailable(pPossesion);
         tilesPicked = true;
         if(ttype == 5){
             fLineMovements();
             nextTurn = true;
-        } else{
+        } else if(!availableRows.contains(0) && !availableRows.contains(1) && !availableRows.contains(2) && !availableRows.contains(3) && !availableRows.contains(4) && !isAvailable){
+            game.addToDeadPile(pPossesion);
+            nextTurn = true;
+            game.getCurrentPlayer().clearPlayerPossession();
+            tilesAdded = true;
+            game.getCurrentPlayer().getPlayerLine().getLineContents();
+            state.set(1,0);
+            if(game.endOfPhase()){
+                wallTilingPhase = true; 
+            }
+        } 
+        else{
             state.set(1,1);
         }
         repaint();
@@ -725,6 +776,6 @@ public class GamePanel extends JPanel implements MouseListener{
             if(game.endOfPhase()){
                 wallTilingPhase = true;            }
             repaint();
-        }
+        } 
     }
 }

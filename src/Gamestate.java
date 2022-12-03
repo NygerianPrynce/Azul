@@ -240,5 +240,9 @@ import java.util.TreeMap;
         public ArrayList<Integer> getFactoryInfo(int factoryNumber){
             return factories.get(factoryNumber).getFactoryContents();
         }
+        //remove current player from the arraylist of players
+        public  void removeWinner(){
+            players.remove(0);
+        }
 
 }
