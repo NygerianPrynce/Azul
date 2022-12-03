@@ -192,6 +192,7 @@ import java.util.TreeMap;
                 if (leftOverPile.get(i) == tile){
                     tiles.add(leftOverPile.get(i));
                     leftOverPile.remove(i);
+                    i--;
                 }
             }
             return tiles;

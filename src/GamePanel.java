@@ -723,7 +723,7 @@ public class GamePanel extends JPanel implements MouseListener{
         } 
     }
     public void leftOverPileMovements(Integer tile){
-        Integer ttype = game.getLeftOverPileTile(0);
+        Integer ttype = game.getLeftOverPileTile(tile);
         ArrayList<Integer> pPossesion = game.pullFromLeftOverPile(ttype);
         game.getCurrentPlayer().addTilesToPossession(pPossesion);
         ArrayList<Integer> availableRows = game.getCurrentPlayer().getPlayerLine().getAvailableRowsP(pPossesion);
