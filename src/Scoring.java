@@ -4,6 +4,7 @@ public class Scoring{
     Integer recentTileRow;
     Integer recentTileColumn;
     Integer[][] playerWall;
+    Integer floorLineValue;
     Player player;
     public Scoring(Player player) {
         this.player = player;
@@ -16,6 +17,11 @@ public class Scoring{
         recentTile = player.getPlayerWall().getRecentTile();
         recentTileRow = player.getPlayerWall().getRecentTileRow();
         recentTileColumn = player.getPlayerWall().getRecentTileColumn();
+        floorLineValue = player.getPlayerLine().getFloorLineValue();
+        if(total < -1){
+            total = 0;
+
+        }
     }
     public int scoreVertical(){
         update();
@@ -70,9 +76,9 @@ public class Scoring{
         return count;
     }
     //subtract a number from a parameter -- CHANGE ONCE PLAYER LINE IS MADE
-    public int subtractFloorLine(int floorLinevalue){
+    public int subtractFloorLine(){
         update();
-        total = total - floorLinevalue;
+        total = total - floorLineValue;
         return total;
     }
     //get total
@@ -141,7 +147,7 @@ public class Scoring{
         update();
         scoreVertical();
         scoreHorizontal();
-        subtractFloorLine(1);
+        subtractFloorLine();
     }
 
 

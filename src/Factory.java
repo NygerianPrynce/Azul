@@ -11,10 +11,6 @@ public class Factory {
     ArrayList<Integer> factory;
     public Factory() {
         factory = new ArrayList<Integer>();
-        //factory.add(0);
-        //factory.add(1);
-        //factory.add(2);
-        //factory.add(3);
     }
     //get a tile from the factory
     public int getTile(int tile){

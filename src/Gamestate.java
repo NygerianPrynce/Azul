@@ -37,8 +37,18 @@ import java.util.TreeMap;
             }
             System.out.println("Factories created");
             //add a single 3 tile to the left over pile
-            leftOverPile.add(3);
-    
+            //fill the bag with 20 of each tile 0-4
+            for (int i = 0; i < 20; i++){
+                bag.add(0);
+                bag.add(1);
+                bag.add(2);
+                bag.add(3);
+                bag.add(4);
+            }
+            //fill factories with tiles
+            refillFactories();
+            //shuffle the bag
+            Collections.shuffle(bag);
         }
         //add arraylist of integers to the dead pile
         public void addToDeadPile(ArrayList<Integer> tiles){
@@ -143,6 +153,7 @@ import java.util.TreeMap;
                 ArrayList<Integer> tiles = currentFactory.getTilesFromBag();
                 currentFactory.fillFactory(tiles);
             }
+            System.out.println("Factories have been refilled");
         }
         // returns the number of tiles in the bag
         public  int getBagSize(){

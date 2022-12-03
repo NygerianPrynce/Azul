@@ -15,13 +15,13 @@ public class PlayerLine {
         pLine = new TreeMap<Integer, Integer[]>();
         fLine = new Integer[7];
         //add an array of 1 integer to the treemap
-        pLine.put(0, new Integer[]{3});
+        pLine.put(0, new Integer[]{6});
         //add an array of 2 nulls to the treemap
-        pLine.put(1, new Integer[]{2, 2});
+        pLine.put(1, new Integer[]{6, 6});
         //add an array of 3 nulls to the treemap
-        pLine.put(2, new Integer[]{6, 3, 3});
+        pLine.put(2, new Integer[]{6, 6, 6});
         //add an array of 4 nulls to the treemap
-        pLine.put(3, new Integer[]{6, 3, 3, 3});
+        pLine.put(3, new Integer[]{6, 6, 6, 6});
         //add an array of 5 nulls to the treemap
         pLine.put(4, new Integer[]{6, 6, 6, 6, 6});
         //FILL THE FLOOR LINE WITH INTEGERS 0-7
@@ -277,5 +277,21 @@ public class PlayerLine {
             }
         }
         return false;
+    }
+    //getFloorLineValue
+    public int getFloorLineValue(){
+        int value = 0;
+        for (int i = 0; i < fLine.length; i++){
+            if (i == 0 || i == 1){
+                value++;
+            }
+            if (i == 2 || i == 3 || i == 4){
+                value = value + 2;
+            }
+            if (i == 5 || i == 6){
+                value = value + 3;
+            }
+        }
+        return value;
     }
 }

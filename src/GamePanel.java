@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements MouseListener{
     boolean nextTurn = false;
     boolean wallTilingPhase = false;
     int repainted = 0;
+    Integer winner = null;
     public GamePanel(){
         game = new Gamestate();
         try{
@@ -250,81 +251,107 @@ public class GamePanel extends JPanel implements MouseListener{
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(1%9) && x<= tS[0][0] + getWidth()/48*(1%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(1/9) && y<= tS[0][1] + getHeight()/30*(1/9) + tS[0][3]){
                 System.out.println("DP2 clicked");
+                leftOverPileMovements(1);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(2%9) && x<= tS[0][0] + getWidth()/48*(2%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(2/9) && y<= tS[0][1] + getHeight()/30*(2/9) + tS[0][3]){
                 System.out.println("DP3 clicked");
+                leftOverPileMovements(2);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(3%9) && x<= tS[0][0] + getWidth()/48*(3%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(3/9) && y<= tS[0][1] + getHeight()/30*(3/9) + tS[0][3]){
                 System.out.println("DP4 clicked");
+                leftOverPileMovements(3);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(4%9) && x<= tS[0][0] + getWidth()/48*(4%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(4/9) && y<= tS[0][1] + getHeight()/30*(4/9) + tS[0][3]){
                 System.out.println("DP5 clicked");
+                leftOverPileMovements(4);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(5%9) && x<= tS[0][0] + getWidth()/48*(5%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(5/9) && y<= tS[0][1] + getHeight()/30*(5/9) + tS[0][3]){
                 System.out.println("DP6 clicked");
+                leftOverPileMovements(5);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(6%9) && x<= tS[0][0] + getWidth()/48*(6%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(6/9) && y<= tS[0][1] + getHeight()/30*(6/9) + tS[0][3]){
                 System.out.println("DP7 clicked");
+                leftOverPileMovements(6);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(7%9) && x<= tS[0][0] + getWidth()/48*(7%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(7/9) && y<= tS[0][1] + getHeight()/30*(7/9) + tS[0][3]){
                 System.out.println("DP8 clicked");
+                leftOverPileMovements(7);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(8%9) && x<= tS[0][0] + getWidth()/48*(8%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(8/9) && y<= tS[0][1] + getHeight()/30*(8/9) + tS[0][3]){
                 System.out.println("DP9 clicked");
+                leftOverPileMovements(8);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(9%9) && x<= tS[0][0] + getWidth()/48*(9%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(9/9) && y<= tS[0][1] + getHeight()/30*(9/9) + tS[0][3]){
                 System.out.println("DP10 clicked");
+                leftOverPileMovements(9);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(10%9) && x<= tS[0][0] + getWidth()/48*(10%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(10/9) && y<= tS[0][1] + getHeight()/30*(10/9) + tS[0][3]){
                 System.out.println("DP11 clicked");
+                leftOverPileMovements(10);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(11%9) && x<= tS[0][0] + getWidth()/48*(11%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(11/9) && y<= tS[0][1] + getHeight()/30*(11/9) + tS[0][3]){
                 System.out.println("DP12 clicked");
+                leftOverPileMovements(11);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(12%9) && x<= tS[0][0] + getWidth()/48*(12%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(12/9) && y<= tS[0][1] + getHeight()/30*(12/9) + tS[0][3]){
                 System.out.println("DP13 clicked");
+                leftOverPileMovements(12);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(13%9) && x<= tS[0][0] + getWidth()/48*(13%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(13/9) && y<= tS[0][1] + getHeight()/30*(13/9) + tS[0][3]){
                 System.out.println("DP14 clicked");
+                leftOverPileMovements(13);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(14%9) && x<= tS[0][0] + getWidth()/48*(14%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(14/9) && y<= tS[0][1] + getHeight()/30*(14/9) + tS[0][3]){
                 System.out.println("DP15 clicked");
+                leftOverPileMovements(14);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(15%9) && x<= tS[0][0] + getWidth()/48*(15%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(15/9) && y<= tS[0][1] + getHeight()/30*(15/9) + tS[0][3]){
                 System.out.println("DP16 clicked");
+                leftOverPileMovements(15);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(16%9) && x<= tS[0][0] + getWidth()/48*(16%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(16/9) && y<= tS[0][1] + getHeight()/30*(16/9) + tS[0][3]){
                 System.out.println("DP17 clicked");
+                leftOverPileMovements(16);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(17%9) && x<= tS[0][0] + getWidth()/48*(17%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(17/9) && y<= tS[0][1] + getHeight()/30*(17/9) + tS[0][3]){
                 System.out.println("DP18 clicked");
+                leftOverPileMovements(17);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(18%9) && x<= tS[0][0] + getWidth()/48*(18%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(18/9) && y<= tS[0][1] + getHeight()/30*(18/9) + tS[0][3]){
                 System.out.println("DP19 clicked");
+                leftOverPileMovements(18);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(19%9) && x<= tS[0][0] + getWidth()/48*(19%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(19/9) && y<= tS[0][1] + getHeight()/30*(19/9) + tS[0][3]){
                 System.out.println("DP20 clicked");
+                leftOverPileMovements(19);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(20%9) && x<= tS[0][0] + getWidth()/48*(20%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(20/9) && y<= tS[0][1] + getHeight()/30*(20/9) + tS[0][3]){
                 System.out.println("DP21 clicked");
+                leftOverPileMovements(20);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(21%9) && x<= tS[0][0] + getWidth()/48*(21%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(21/9) && y<= tS[0][1] + getHeight()/30*(21/9) + tS[0][3]){
                 System.out.println("DP22 clicked");
+                leftOverPileMovements(21);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(22%9) && x<= tS[0][0] + getWidth()/48*(22%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(22/9) && y<= tS[0][1] + getHeight()/30*(22/9) + tS[0][3]){
                 System.out.println("DP23 clicked");
+                leftOverPileMovements(22);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(23%9) && x<= tS[0][0] + getWidth()/48*(23%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(23/9) && y<= tS[0][1] + getHeight()/30*(23/9) + tS[0][3]){
                 System.out.println("DP24 clicked");
+                leftOverPileMovements(23);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(24%9) && x<= tS[0][0] + getWidth()/48*(24%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(24/9) && y<= tS[0][1] + getHeight()/30*(24/9) + tS[0][3]){
                 System.out.println("DP25 clicked");
+                leftOverPileMovements(24);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(25%9) && x<= tS[0][0] + getWidth()/48*(25%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(25/9) && y<= tS[0][1] + getHeight()/30*(25/9) + tS[0][3]){
                 System.out.println("DP26 clicked");
+                leftOverPileMovements(25);
             }
             if(gameStarted && !tilesPicked && x>= tS[0][0] + getWidth()/48*(26%9) && x<= tS[0][0] + getWidth()/48*(26%9) + tS[0][2] && y>= tS[0][1] + getHeight()/30*(26/9) && y<= tS[0][1] + getHeight()/30*(26/9) + tS[0][3]){
                 System.out.println("DP27 clicked");
+                leftOverPileMovements(26);
             }
             //MAKE THE PLAYER LINE CLICKABLE AND MAKE IT SO THAT IT CAN ONLY BE CLICKED ONCE
             if(gameStarted && tilesPicked && x>= tS[1][0] + getWidth()/38 -getWidth()/34-getWidth()/34*0 && x<= tS[1][0] + getWidth()/38 && y>= tS[1][1] + getHeight()/23*0 + getHeight()/500*0 && y<= tS[1][1] + getHeight()/23*0 + getHeight()/500*0 + getHeight()/23){
@@ -357,7 +384,7 @@ public class GamePanel extends JPanel implements MouseListener{
             if(gameStarted && x>= getWidth()/3*2 - getWidth()/10 -getWidth()/5 -getWidth()/40 + getWidth()/29*0 && x<= getWidth()/3*2 - getWidth()/10 && y>=tS[1][1] + getHeight()/4 && y<=tS[1][1] + getHeight()/4 + getHeight()/23){
                 System.out.println("FL1 clicked");
                 nextTurn = true;
-                pLineMovements();
+                fLineMovements();
             }
             //clickable space for next button
             if(gameStarted && tilesAdded && nextTurn && x>=getWidth()-getWidth()/4+getWidth()/50 && x<= getWidth()-getWidth()/4+getWidth()/50 + getWidth()/8 && y>=getHeight()/2+getHeight()/9 && y<=getHeight()/2+getHeight()/9 + getHeight()/5+getHeight()/120){
@@ -370,15 +397,33 @@ public class GamePanel extends JPanel implements MouseListener{
                         System.out.println(cRows);
                         for(int a = 0; a<cRows.size(); a++){
                             game.getCurrentPlayer().getPlayerWall().addTile(cRows.get(a).get(0), cRows.get(a).get(1));
+                            //scoring phase
+                        System.out.println("scoring phase");
+                        game.getCurrentPlayer().getScore().scoreNormal();
                         }
                         game.addToDeadPile(game.getCurrentPlayer().getPlayerLine().clearCompleteRows());
                         game.getCurrentPlayer().getPlayerLine().printPlayerLine();
-                        //scoring phase
-                        System.out.println("scoring phase");
-                        game.getCurrentPlayer().getScore().scoreNormal();
+                        
+                        //clear factory
+                        game.getCurrentPlayer().getPlayerLine().emptyFloorLine();
+                        if(game.getCurrentPlayer().getPlayerWall().isGameOver()){
+                            System.out.println("GEE GEE GAME OVER");
+                            winner = i;
+                            //SET THE STATE 0 TO 3
+                            state.set(0, 2);
+                        }
                         game.cyclePlayers();
                     }
                     wallTilingPhase = false;
+                    game.refillFactories();
+                    //add a starter tile back to the left over pile
+                    ArrayList<Integer> starterTile = new ArrayList<Integer>(){{
+                        add(5);
+                    }};
+                    game.addToLeftOverPile(starterTile);
+                    
+                    repaint();
+
                 }
                 game.cyclePlayers();
                 tilesPicked = false;
@@ -415,6 +460,18 @@ public class GamePanel extends JPanel implements MouseListener{
             repainted++;
             System.out.println("Board repaint number: " + repainted);
                 g.drawImage(bg2, 0, 0, getWidth(), getHeight(), null);
+                //draws playe rnumbers
+                for(int i = 0; i<4; i++){
+                    Integer pNumber = game.getPlayer(i).getPlayerNumber() + 1;
+                    g.setColor(Color.RED);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+                    if(i == 0){
+                        g.drawString("Player " + pNumber, playerBoardSizes[i][0] + getWidth()/7, playerBoardSizes[i][1] - getHeight()/200);
+                    } else{
+                        g.drawString("Player " + pNumber, playerBoardSizes[i][0] + getWidth()/15, playerBoardSizes[i][1] - getHeight()/200);
+                    }
+                }
+                
                 //empty boards - beginning picture
                 g.drawImage(Board, playerBoardSizes[0][0], playerBoardSizes[0][1], playerBoardSizes[0][2], playerBoardSizes[0][3], null);
                 g.drawImage(Board, playerBoardSizes[1][0], playerBoardSizes[1][1], playerBoardSizes[1][2], playerBoardSizes[1][3], null);
@@ -568,6 +625,7 @@ public class GamePanel extends JPanel implements MouseListener{
             //draws player wall tiling and score marker and player and floor line for all other dormant players
             for(int a = 1; a<=3; a++){
                 ArrayList<ArrayList<Integer>> sidePWallPlacements = game.getPlayer(a).getPlayerWall().getWallPlacements();
+                
                 Integer addX = movingFactors.get(a-1).get(0);
                 Integer addY = movingFactors.get(a-1).get(1);
                 for(int i = 0; i< sidePWallPlacements.size(); i++){
@@ -607,6 +665,14 @@ public class GamePanel extends JPanel implements MouseListener{
                 }
             }
         }
+        if(state.get(0) == 3){
+            //draw a blue rectangle that takes up the entire space and draw text in the middle that has th enumber of the winner
+            g.setColor(Color.BLUE);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+            g.drawString("Player " + winner + " wins!", getWidth()/2 - getWidth()/8, getHeight()/2);
+        }
         
     }
     public void factoryMovements(Integer factory, Integer tile){
@@ -623,7 +689,12 @@ public class GamePanel extends JPanel implements MouseListener{
         ArrayList<Integer> pPossesion = game.pullFromLeftOverPile(ttype);
         game.getCurrentPlayer().addTilesToPossession(pPossesion);
         tilesPicked = true;
-        state.set(1,1);
+        if(ttype == 5){
+            fLineMovements();
+            nextTurn = true;
+        } else{
+            state.set(1,1);
+        }
         repaint();
     }
     public void pLineMovements(Integer row){
@@ -642,7 +713,7 @@ public class GamePanel extends JPanel implements MouseListener{
 
         }
     }
-    public void pLineMovements(){
+    public void fLineMovements(){
         ArrayList<Integer> tilesInHand = game.getCurrentPlayer().getTilesInPossession();   
         //is Available
         Boolean isAvailable = game.getCurrentPlayer().getPlayerLine().isFloorLineAvailable(tilesInHand);
