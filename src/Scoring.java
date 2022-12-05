@@ -19,7 +19,7 @@ public class Scoring{
         recentTileRow = player.getPlayerWall().getRecentTileRow();
         recentTileColumn = player.getPlayerWall().getRecentTileColumn();
         floorLineValue = player.getPlayerLine().getFloorLineValue();
-        if(total < -1){
+        if(total < 0){
             total = 0;
         }
     }
