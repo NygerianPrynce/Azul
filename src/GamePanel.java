@@ -400,13 +400,12 @@ public class GamePanel extends JPanel implements MouseListener{
                             game.getCurrentPlayer().getPlayerWall().addTile(cRows.get(a).get(0), cRows.get(a).get(1));
                             //scoring phase
                             System.out.println("scoring phase");
-                            System.out.println("BAM BAM" + game.getCurrentPlayer().getScore().scoreNormal());
-                            System.out.println("PLAYER WALL");
-                            game.getCurrentPlayer().getPlayerWall().printWall();
+                            game.getCurrentPlayer().getScore().scoreNormal();
                         }
+                        game.getCurrentPlayer().getScore().subtractFloorLine();
                         game.addToDeadPile(game.getCurrentPlayer().getPlayerLine().clearCompleteRows());
-                        game.getCurrentPlayer().getPlayerLine().printPlayerLine();
-                        
+                        System.out.println(game.getCurrentPlayer().getPlayerNumber());
+                        game.getCurrentPlayer().getScore().getTotal();                        
                         //clear factory
                         game.getCurrentPlayer().getPlayerLine().emptyFloorLine();
                         if(game.getCurrentPlayer().getPlayerWall().isGameOver()){
@@ -579,8 +578,8 @@ public class GamePanel extends JPanel implements MouseListener{
                 Integer x = tile.get(2);
                 g.drawImage(tiles[type], tileSizes[2][0] + getWidth()/34*x + getWidth()/1455*x, tileSizes[2][1] - getHeight()/22*y, tileSizes[2][2], tileSizes[2][3], null);
                 //draw rectangle around tile
-                //g.setColor(Color.GREEN);
-                //g.drawRect(tileSizes[2][0] + getWidth()/34*x + getWidth()/1455*x, tileSizes[2][1] - getHeight()/22*y, tileSizes[2][2], tileSizes[2][3]);
+                g.setColor(Color.GREEN);
+                g.drawRect(tileSizes[2][0] + getWidth()/34*x + getWidth()/1455*x, tileSizes[2][1] - getHeight()/22*y, tileSizes[2][2], tileSizes[2][3]);
             }
             //draws main player floor tiling
             for(int i = 0; i<game.getCurrentPlayer().getPlayerLine().getFloorLine().size(); i++){

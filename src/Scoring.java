@@ -6,6 +6,7 @@ public class Scoring{
     Integer[][] playerWall;
     Integer floorLineValue;
     Player player;
+    Boolean noConnect = false;
     public Scoring(Player player) {
         this.player = player;
         total = 0;
@@ -22,56 +23,40 @@ public class Scoring{
             total = 0;
         }
     }
-    public int scoreVertical(){
+    public int scoreRowAndColumn(){
         update();
         int count = 0;
         count++;
         //row changes column stays the same
-        System.out.println("round 1");
         for(int i = recentTileRow+1; i<5; i++){
             if(playerWall[i][recentTileColumn] == 6){
                 i = 21;
             }else{
                 count++;
             }
-            System.out.println("counting downwards: " + count);
         }
-        System.out.println("round 2");
         for(int i = recentTileRow-1; i>-1 && i<5; i--){
             if(playerWall[i][recentTileColumn] == 6){
                 i = 21;
             }else{
                 count++;
             }
-            System.out.println("counting upwards: " + count);
         }
-        total = total + count;
-        return count;
-    }
-    public int scoreHorizontal(){
-        update();
-        int count = 0;
-        count++;
-        //column changes row stays the same
-        System.out.println("round 1");
         for(int i = recentTileColumn+1; i<5; i++){
             if(playerWall[recentTileRow][i] == 6){
                 i = 21;
             }else{
                 count++;
             }
-            System.out.println("counting right: " + count);
         }
-        System.out.println("round 2");
         for(int i = recentTileColumn-1; i>-1 && i<5; i--){
             if(playerWall[recentTileRow][i] == 6){
                 i = 21;
             }else{
                 count++;
             }
-            System.out.println("counting left: " + count);
         }
-        total = total + count;        
+        total = total + count;
         return count;
     }
     //subtract a number from a parameter -- CHANGE ONCE PLAYER LINE IS MADE
@@ -145,9 +130,7 @@ public class Scoring{
     //score normal method which does score vertical and horizontal and the floor line
     public int scoreNormal(){
         update();
-        System.out.println("SCORE VERTICAL SCORE" + scoreVertical());
-        System.out.println("SCORE HORIZONTAL SCORE" + scoreHorizontal());
-        System.out.println("SCORE FLOOR LINE SCORE" + subtractFloorLine());
+        System.out.println("SCORE VERTICAL AND HORIZONTAL SCORE" + scoreRowAndColumn());
         return total;
     }
 

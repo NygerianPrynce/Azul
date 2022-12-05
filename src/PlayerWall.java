@@ -119,8 +119,7 @@ public class PlayerWall{
         //fixes
         if(tileType == 0){
             tileType = 4;
-        }
-        if(tileType == 4){
+        } else if(tileType == 4){
             tileType = 0;
         }
         //actual placements
