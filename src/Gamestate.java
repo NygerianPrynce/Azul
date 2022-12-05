@@ -29,8 +29,8 @@ import java.util.TreeMap;
             players.add(new Player(1));
             players.add(new Player(2));
             players.add(new Player(3));
-            setStarter();
-            cycleToStarter();
+           //randomly shuffle the players
+            Collections.shuffle(players);
             //fill treemap with 9 keys and 9 factory objects
             for (int i = 0; i < 9; i++){
                 factories.add(new Factory());
@@ -45,6 +45,8 @@ import java.util.TreeMap;
                 bag.add(3);
                 bag.add(4);
             }
+            //adds the starter tile to the left over pile
+            leftOverPile.add(5);
             //fill factories with tiles
             refillFactories();
             //shuffle the bag
@@ -60,23 +62,7 @@ import java.util.TreeMap;
             players.remove(0);
             players.add(temp);
         }
-        //check if player is starter for all 5
-        public Player findStarter(){
-            Player starter = null;
-            for (int i = 0; i < players.size(); i++){
-                if (players.get(i).isStarter()){
-                    starter = players.get(i);
-                }
-            }
-            return starter;
-        }
-        //cycle the players until the player with the starter tile is first in the arraylist
-        public void cycleToStarter(){
-            Player starter = findStarter();
-            while (starter != players.get(0)){
-                cyclePlayers();
-            }
-        }
+    
         // returns the total number of tiles in the bag
         public int getBagTotal(){
             int total = 0;
@@ -86,13 +72,6 @@ import java.util.TreeMap;
             return total;
         }
         //sets a random player from the arraylist of players to start the game by giving them a starter tile - make sure the starter is checked at the beginning of the game
-        public void setStarter(){
-            Random rand = new Random();
-            int randomPlayer = rand.nextInt(players.size());
-            players.get(randomPlayer).getPlayerLine().addStarterTile();
-            players.get(randomPlayer).makeStarter();
-
-        }
         //get a factory from the treemap of factories
         public Factory getFactory(int factoryNumber){
             return factories.get(factoryNumber);

@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements MouseListener{
     int repainted = 0;
     Integer winner = null;
     Player playerWinner = null;
+    Integer times = 0;
     public GamePanel(){
         game = new Gamestate();
         try{
@@ -475,10 +476,7 @@ public class GamePanel extends JPanel implements MouseListener{
             } else if(tilesPicked){
                 g.drawString("PICK THE ROW OR THE FLOOR LINE", getWidth()/10, getHeight()/2 - getHeight()/3);
             }
-            else if(tilesAdded){
-                g.drawString("WALL TILING PHASE HAS BEEN COMPLETED", getWidth()/8, getHeight()/2 - getHeight()/3);
-                g.drawString("CLICK THE NEXT BUTTON", getWidth()/10, getHeight()/2 - getHeight()/3 + getHeight()/10);
-            } else{
+             else{
                 g.drawString("PICK THE FACTORY OR THE FLOOR", getWidth()/10, getHeight()/2 - getHeight()/3);
             }
                 //draws player numbers
@@ -710,6 +708,12 @@ public class GamePanel extends JPanel implements MouseListener{
         game.addToLeftOverPile(game.getFactory(factory).moveLeftOvers());
         tilesPicked = true;
         state.set(1,1);
+        if(times == 0){
+            times = 1;
+            System.out.println("TIMES" + times);
+        } else if(times == 1){
+            times = 2;
+        }
         repaint();
         if(!availableRows.contains(0) && !availableRows.contains(1) && !availableRows.contains(2) && !availableRows.contains(3) && !availableRows.contains(4) && !isAvailable){
             game.addToDeadPile(pPossesion);
@@ -721,10 +725,24 @@ public class GamePanel extends JPanel implements MouseListener{
                 wallTilingPhase = true; 
             }
             nextTurn = true;
+            
         } 
     }
     public void leftOverPileMovements(Integer tile){
-        Integer ttype = game.getLeftOverPileTile(tile);
+        System.out.println("TIMES" + times);
+
+        if(times == 0 || (times == 1 && tile == 0)){
+        }
+        else{
+            Integer ttype = game.getLeftOverPileTile(tile);
+            if(times == 1){
+                ttype = game.getLeftOverPileTile(0);
+                ArrayList<Integer> pPossesion = game.pullFromLeftOverPile(ttype);
+                game.getCurrentPlayer().addTilesToPossession(pPossesion);
+                fLineMovements();
+                times = 2;
+                ttype = game.getLeftOverPileTile(tile -1);
+            }
         ArrayList<Integer> pPossesion = game.pullFromLeftOverPile(ttype);
         game.getCurrentPlayer().addTilesToPossession(pPossesion);
         ArrayList<Integer> availableRows = game.getCurrentPlayer().getPlayerLine().getAvailableRowsP(pPossesion);
@@ -748,6 +766,7 @@ public class GamePanel extends JPanel implements MouseListener{
             state.set(1,1);
         }
         repaint();
+    }
     }
     public void pLineMovements(Integer row){
         ArrayList<Integer> tilesInHand = game.getCurrentPlayer().getTilesInPossession();        
