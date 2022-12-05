@@ -40,16 +40,15 @@ public class GamePanel extends JPanel implements MouseListener{
             Black = ImageIO.read(GamePanel.class.getResource("/images/3.png"));
             Blue = ImageIO.read(GamePanel.class.getResource("/images/4.png"));
             Starter = ImageIO.read(GamePanel.class.getResource("/images/5.png"));
-            Board = ImageIO.read(GamePanel.class.getResource("/images/Board.jpg"));
-            Factory = ImageIO.read(GamePanel.class.getResource("/images/Factory.png"));
-            Score = ImageIO.read(GamePanel.class.getResource("/images/Score.png"));
-            Empty = ImageIO.read(GamePanel.class.getResource("/images/emptypng.png"));
             bg1 = ImageIO.read(GamePanel.class.getResource("/images/bg1.png"));
             bg2 = ImageIO.read(GamePanel.class.getResource("/images/bg2.png"));
+            Board = ImageIO.read(GamePanel.class.getResource("/images/Board.jpg"));
+            Empty = ImageIO.read(GamePanel.class.getResource("/images/emptypng.png"));
+            Factory = ImageIO.read(GamePanel.class.getResource("/images/Factory.png"));
             Next1 = ImageIO.read(GamePanel.class.getResource("/images/Next1.png"));
             Next2 = ImageIO.read(GamePanel.class.getResource("/images/Next2.png"));
-
-
+            Score = ImageIO.read(GamePanel.class.getResource("/images/Score.png"));
+            
             //add tile colors to array
             tiles = new BufferedImage[]{White, Yellow, Red, Black, Blue, Starter, Empty};
             System.out.println("tiles");
@@ -400,8 +399,10 @@ public class GamePanel extends JPanel implements MouseListener{
                         for(int a = 0; a<cRows.size(); a++){
                             game.getCurrentPlayer().getPlayerWall().addTile(cRows.get(a).get(0), cRows.get(a).get(1));
                             //scoring phase
-                        System.out.println("scoring phase");
-                        game.getCurrentPlayer().getScore().scoreNormal();
+                            System.out.println("scoring phase");
+                            System.out.println("BAM BAM" + game.getCurrentPlayer().getScore().scoreNormal());
+                            System.out.println("PLAYER WALL");
+                            game.getCurrentPlayer().getPlayerWall().printWall();
                         }
                         game.addToDeadPile(game.getCurrentPlayer().getPlayerLine().clearCompleteRows());
                         game.getCurrentPlayer().getPlayerLine().printPlayerLine();
@@ -562,7 +563,7 @@ public class GamePanel extends JPanel implements MouseListener{
                 Integer type = tile.get(0);
                 Integer number = tile.get(1);
                 Integer row = tile.get(2);
-                System.out.println("Tile to be printed: " + type + ", " + number + " times in row " + row);          
+                //System.out.println("Tile to be printed: " + type + ", " + number + " times in row " + row);          
                     for(int b = 0; b< number; b++){
                         g.drawImage(tiles[type], tileSizes[1][0] - getWidth()/34*b, tileSizes[1][1] + getHeight()/23*row + getHeight()/500*row, tileSizes[1][2], tileSizes[1][3], null);
                     }

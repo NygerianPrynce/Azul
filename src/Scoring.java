@@ -20,7 +20,6 @@ public class Scoring{
         floorLineValue = player.getPlayerLine().getFloorLineValue();
         if(total < -1){
             total = 0;
-
         }
     }
     public int scoreVertical(){
@@ -79,7 +78,7 @@ public class Scoring{
     public int subtractFloorLine(){
         update();
         total = total - floorLineValue;
-        return total;
+        return floorLineValue;
     }
     //get total
     public int getTotal(){
@@ -140,14 +139,16 @@ public class Scoring{
         count = count + countAllTiles();
         count = count + countFullRows();
         count = count + countFullColumns();
+        total = total + count;
         return count;
     }
     //score normal method which does score vertical and horizontal and the floor line
-    public void scoreNormal(){
+    public int scoreNormal(){
         update();
-        scoreVertical();
-        scoreHorizontal();
-        subtractFloorLine();
+        System.out.println("SCORE VERTICAL SCORE" + scoreVertical());
+        System.out.println("SCORE HORIZONTAL SCORE" + scoreHorizontal());
+        System.out.println("SCORE FLOOR LINE SCORE" + subtractFloorLine());
+        return total;
     }
 
 

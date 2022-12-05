@@ -35,6 +35,7 @@ ArrayList<Integer> tilesInPosession = new ArrayList<Integer>();
     }
     //get score
     public Scoring getScore(){
+        System.out.println("SCORE ACCESSED");
         return score;
     }
     //get player number

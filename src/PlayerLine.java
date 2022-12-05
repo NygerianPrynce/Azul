@@ -282,13 +282,12 @@ public class PlayerLine {
     public int getFloorLineValue(){
         int value = 0;
         for (int i = 0; i < fLine.length; i++){
-            if (i == 0 || i == 1){
+            if (fLine[i]!=6 && (i == 0 || i == 1)){
                 value++;
-            }
-            if (i == 2 || i == 3 || i == 4){
+            } if (fLine[i]!=6 && (i == 2 || i == 3 || i == 4)){
                 value = value + 2;
             }
-            if (i == 5 || i == 6){
+             if (fLine[i]!=6 && ((i == 5 || i == 6))){
                 value = value + 3;
             }
         }

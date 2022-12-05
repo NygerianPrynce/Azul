@@ -169,9 +169,14 @@ import java.util.TreeMap;
         }
         // add arraylist of ties to the left over pile
         public  void addToLeftOverPile(ArrayList<Integer> tiles){
-            for (int i = 0; i < tiles.size(); i++){
-                leftOverPile.add(tiles.get(i));
+            //if the tiles is empty dont do anything
+            if (tiles.size() == 0){
+            } else{
+                for (int i = 0; i < tiles.size(); i++){
+                    leftOverPile.add(tiles.get(i));
+                }
             }
+            
         } 
         //get discard pile size
         public int getLeftOverPileSize(){
