@@ -432,6 +432,7 @@ public class GamePanel extends JPanel implements MouseListener{
 
                 }
                 game.cyclePlayers();
+
                 tilesPicked = false;
                 tilesAdded = false;
                 nextTurn = false;
