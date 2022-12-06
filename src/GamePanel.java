@@ -711,9 +711,7 @@ public class GamePanel extends JPanel implements MouseListener{
         if(times == 0){
             times = 1;
             System.out.println("TIMES" + times);
-        } else if(times == 1){
-            times = 2;
-        }
+        } 
         repaint();
         if(!availableRows.contains(0) && !availableRows.contains(1) && !availableRows.contains(2) && !availableRows.contains(3) && !availableRows.contains(4) && !isAvailable){
             game.addToDeadPile(pPossesion);
