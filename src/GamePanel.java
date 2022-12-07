@@ -770,7 +770,9 @@ public class GamePanel extends JPanel implements MouseListener{
     public void pLineMovements(Integer row){
         ArrayList<Integer> tilesInHand = game.getCurrentPlayer().getTilesInPossession();        
         ArrayList<Integer> availableRows = game.getCurrentPlayer().getPlayerLine().getAvailableRowsP(tilesInHand);
+        ArrayList<Integer> availableRowsRaw = game.getCurrentPlayer().getPlayerLine().getAvailableRowsRaw(tilesInHand);
         if(availableRows.contains(row)){
+            System.out.println("PLAYER LINE 1");
             game.getCurrentPlayer().getPlayerLine().addTilesToRow(row, tilesInHand);
             game.getCurrentPlayer().clearPlayerPossession();
             tilesAdded = true;
@@ -780,8 +782,38 @@ public class GamePanel extends JPanel implements MouseListener{
                 wallTilingPhase = true; 
             }
             repaint();
+        } else if(availableRowsRaw.contains(row)){
+            System.out.println("PLAYER LINE 2");
+            Integer amount = game.getCurrentPlayer().getPlayerLine().getRowSpace(row);
+            ArrayList<Integer> tiles = new ArrayList<Integer>();
+            for(int i = 0; i < amount; i++){
+                tiles.add(tilesInHand.get(i));
+            }
+            System.out.println("TILES SPILLLOVER: " + tiles);
+            System.out.println("TILES SPILLLOVER LEFT OVER: " + tilesInHand);
+            System.out.println("TILES SPILLLOVER AMOUNT: " + amount);
 
+            //remove the number of tiles that are in tiles from tileInHand
+            for(int i = 0; i < amount; i++){
+                tilesInHand.remove(0);
+            }
+            System.out.println("TILES SPILLLOVER LEFT OVER 2: " + tilesInHand);
+            game.getCurrentPlayer().getPlayerLine().addTilesToRow(row, tiles);
+            //add the rest of the tiles to the floor line        
+            //print the files to go to the floor line
+            System.out.println("Floor Line SPILLOVER: " + tilesInHand);
+            System.out.println("TILES SPILLLOVER: " + tiles);
+            game.getCurrentPlayer().getPlayerLine().addFloorLine(tilesInHand);
+            game.getCurrentPlayer().clearPlayerPossession();
+            tilesAdded = true;
+            game.getCurrentPlayer().getPlayerLine().getLineContents();
+            state.set(1,0);
+            if(game.endOfPhase()){
+                wallTilingPhase = true; 
+            }
+            repaint();
         }
+
     }
     public void fLineMovements(){
         ArrayList<Integer> tilesInHand = game.getCurrentPlayer().getTilesInPossession();   
