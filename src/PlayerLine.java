@@ -202,6 +202,21 @@ public class PlayerLine {
         }
         return rows;
     }
+    public ArrayList<Integer> getAvailableRowsRaw(ArrayList<Integer> tiles){
+        ArrayList<Integer> rows = new ArrayList<Integer>();
+        for (int i = 0; i < pLine.size(); i++){
+            if (getRowSpace(i) + getFloorLineSpace() >= tiles.size()){
+                if(getRowType(i) != 6 && getRowType(i) == tiles.get(0)){
+                    rows.add(i);
+                }
+                if(getRowType(i) == 6){
+                    rows.add(i);
+                }
+                
+            }
+        }
+        return rows;
+    }
     //checks if a row is available to hold the tiles in the arraylist
     public boolean isRowAvailableP(Integer row, ArrayList<Integer> tiles){
         if (getRowType(row) == tiles.get(0) && getRowSpace(row) >= tiles.size()){

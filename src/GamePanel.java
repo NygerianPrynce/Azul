@@ -423,6 +423,7 @@ public class GamePanel extends JPanel implements MouseListener{
                     }
                     wallTilingPhase = false;
                     game.refillFactories();
+                    times = 0;
                     //add a starter tile back to the left over pile
                     ArrayList<Integer> starterTile = new ArrayList<Integer>(){{
                         add(5);
@@ -759,7 +760,7 @@ public class GamePanel extends JPanel implements MouseListener{
             if(game.endOfPhase()){
                 wallTilingPhase = true; 
             }
-        } 
+        }
         else{
             state.set(1,1);
         }
