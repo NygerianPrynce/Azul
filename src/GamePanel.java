@@ -66,7 +66,6 @@ public class GamePanel extends JPanel implements MouseListener{
         
         addMouseListener(this);
         state.add(0);
-        state.set(0,3);
     }
     public void mousePressed(MouseEvent e){}
     public void mouseReleased(MouseEvent e){}
