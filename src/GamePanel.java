@@ -15,11 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.*;
 import java.lang.Thread;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 public class GamePanel extends JPanel implements MouseListener{
     //turn state into an arraylist
     private static ArrayList<Integer> state = new ArrayList<Integer>();
     private Gamestate game;
-    private BufferedImage White, Yellow, Red, Black, Blue, Starter, Board, Factory, Score, Empty, bg1, bg2, Next1, Next2;
+    private BufferedImage White, Yellow, Red, Black, Blue, Starter, Board, Factory, Score, Empty, bg1, bg2, bg3, Next1, Next2;
     //array that has the images of the tiles
     private BufferedImage[] tiles;
     boolean gameStarted = false;
@@ -43,6 +47,7 @@ public class GamePanel extends JPanel implements MouseListener{
             Starter = ImageIO.read(GamePanel.class.getResource("/images/5.png"));
             bg1 = ImageIO.read(GamePanel.class.getResource("/images/bg1.png"));
             bg2 = ImageIO.read(GamePanel.class.getResource("/images/bg2.png"));
+            bg3 = ImageIO.read(GamePanel.class.getResource("/images/bg3.jpeg"));
             Board = ImageIO.read(GamePanel.class.getResource("/images/Board.jpg"));
             Empty = ImageIO.read(GamePanel.class.getResource("/images/emptypng.png"));
             Factory = ImageIO.read(GamePanel.class.getResource("/images/Factory.png"));
@@ -61,6 +66,7 @@ public class GamePanel extends JPanel implements MouseListener{
         
         addMouseListener(this);
         state.add(0);
+        state.set(0,3);
     }
     public void mousePressed(MouseEvent e){}
     public void mouseReleased(MouseEvent e){}
@@ -690,17 +696,28 @@ public class GamePanel extends JPanel implements MouseListener{
         }
         if(state.get(0) == 3){
             //draw a blue rectangle that takes up the entire space and draw text in the middle that has th enumber of the winner
-            g.setColor(Color.BLUE);
-            g.fillRect(0, 0, getWidth(), getHeight());
+            //draw bg3 image
+            Color c = new Color(171,76,69);
+            g.drawImage(bg3, 0, 0, getWidth(), getHeight(), null);
             g.setColor(Color.WHITE);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g.drawString("Player " + winner + " wins!", getWidth()/2 - getWidth()/8, getHeight()/2);
-            //draw the player standings
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-            g.drawString("Player " +  game.getPlayer(0).getPlayerNumber() + ": " + game.getPlayer(0).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10);
-            g.drawString("Player " +  game.getPlayer(1).getPlayerNumber() + ": " + game.getPlayer(1).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10 + getHeight()/20);
-            g.drawString("Player " +  game.getPlayer(2).getPlayerNumber() + ": " + game.getPlayer(2).getScore().getTotal(), getWidth()/2 - getWidth()/8, getHeight()/2 + getHeight()/10 + getHeight()/10);
-        }
+            g.fillRect(getWidth()/2 - getWidth()/4 - getWidth()/50, getHeight()/4 - getHeight()/9 + getHeight()/120, getWidth()/2 + getWidth()/14, getHeight()/8 + getHeight()/100);
+            g.setColor(c);
+            g.setFont(new Font("Monospaced", Font.BOLD, 100));
+            g.drawString("Player " + winner + " Wins!", getWidth()/2 - getWidth()/4 - getWidth()/50, getHeight()/4);
+            //draw white box around winner anouncement
+                        //draw the player standings
+            //draw filled white box around standings
+            g.setColor(Color.WHITE);
+            g.fillRect(getWidth()/2 - getWidth()/7 - getWidth()/200, getHeight()/2 - getHeight()/17, getWidth()/4 + getWidth()/19, getHeight()/11 + getHeight()/20*game.getPlayerOrder().size());            
+            g.setColor(c);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 60));
+            g.drawString("Player Standings", getWidth()/2 - getWidth()/7 - getWidth()/200, getHeight()/2);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+            for(int i = 0; i<game.getPlayerOrder().size(); i++){
+                Integer pNum = game.getPlayerOrder().get(i).getPlayerNumber() + 1;
+                g.drawString("Player " + pNum + ": " + game.getPlayerOrder().get(i).getScore().getTotal(), getWidth()/2 - getWidth()/18, getHeight()/2 + getHeight()/15 + getHeight()/20*i);
+            }
+       }
         
     }
     public void factoryMovements(Integer factory, Integer tile){
