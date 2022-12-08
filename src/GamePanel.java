@@ -417,9 +417,11 @@ public class GamePanel extends JPanel implements MouseListener{
                             gameStarted = false;
                             game.removeWinner();
                             //SET THE STATE 0 TO 3
-                            state.set(0, 2);
+                            state.set(0, 3);
+                            break;
                         }
                         game.cyclePlayers();
+
                     }
                     wallTilingPhase = false;
                     game.refillFactories();
@@ -483,12 +485,13 @@ public class GamePanel extends JPanel implements MouseListener{
                 //draws player numbers
                 for(int i = 0; i<4; i++){
                     Integer pNumber = game.getPlayer(i).getPlayerNumber() + 1;
+                    Integer score = game.getPlayer(i).getScore().getTotal();
                     g.setColor(Color.BLACK);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
                     if(i == 0){
-                        g.drawString("Player " + pNumber, playerBoardSizes[i][0] + getWidth()/7, playerBoardSizes[i][1] - getHeight()/200);
+                        g.drawString("Player " + pNumber + " ~ " + score, playerBoardSizes[i][0] + getWidth()/8, playerBoardSizes[i][1] - getHeight()/200);
                     } else{
-                        g.drawString("Player " + pNumber, playerBoardSizes[i][0] + getWidth()/15, playerBoardSizes[i][1] - getHeight()/200);
+                        g.drawString("Player " + pNumber + " ~ " + score, playerBoardSizes[i][0] + getWidth()/19, playerBoardSizes[i][1] - getHeight()/200);
                     }
                 }
                 
